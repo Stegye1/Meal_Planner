@@ -1,38 +1,114 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Reset a základní styl */
+html, #root {
+  height: 100%;
+  margin: 0;
+ 
   display: flex;
   flex-direction: column;
+ 
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+/* Pevný header nahoře */
+.header {
+  position: sticky;
+  top: 0; 
+  background-color: rgba(253, 251, 241, 0.95);
+  color: rgba(0, 0, 0, 0.567);
+  padding: 5px 20px;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(223, 187, 54, 0.336);
+}
+
+.logo img {
+  height: 50px;
+  width: auto;
+  vertical-align: middle;
+}
+
+.nav {
+  display: flex;
+  gap: 20px;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  margin-right: auto;
+  padding: 0;
+}
+
+.nav-links a {
+  color: rgba(0, 0, 0, 0.567);
+  text-decoration: none;
+  font-weight: 600;
+  
+}
+
+.nav-action {
+  background-color: black;
   color: white;
+  padding: 4px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 600;
 }
 
-.App-link {
-  color: #61dafb;
+.nav-links a:hover {
+  text-decoration: underline;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.nav-action a:hover {
+  background-color: #a09a9a;
+}
+
+
+/* Hlavní obsah s vyplněním prostoru */
+.main-content { 
+  padding: 20px 100px;
+  flex: 1;
+  background: white;  
+}
+
+#plan {
+  display: grid;
+  grid-template-columns: 1fr 1fr;  
+  align-items: start;
+}
+
+/* levý sloupec s jídelníčkem */
+#meal-planner { 
+  background: hwb(47 94% 3%);
+ margin: 20px;
+  padding: 20px;
+  border-radius: 8px;  
+}
+
+/* pravý sloupec s nákupním seznamem */
+#shopping-list {  
+  background: hwb(47 94% 3%);
+ margin: 20px;
+  padding: 20px;
+   border-radius: 8px; 
+ }
+
+
+/* Footer pevný dole */
+.footer {
+  background-color: rgba(0, 0, 0, 0.784);
+  color: white;
+  text-align: center;
+  padding: 15px 10px; 
+  font-size: 0.9rem;
 }
