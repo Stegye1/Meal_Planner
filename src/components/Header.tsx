@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export function Header() {
   return (
@@ -10,23 +11,23 @@ export function Header() {
 
         <ul className="nav-links">
           <li>
-            <a href="/welcome">Úvod</a>
+            <Link to="/welcome">Úvod</Link>
           </li>
 
           <li>
-            <a href="/planner">Plánování jídelníčku</a>
+            <Link to="/planner">Plánování jídelníčku</Link>
           </li>
 
           <li>
-            <a href="/videos">Videa</a>
+            <Link to="/videos">Videa</Link>
           </li>
 
           <li>
-            <a href="/recipes">Recepty</a>
+            <Link to="/recipes">Recepty</Link>
           </li>
 
           <li>
-            <a href="/contacts">Kontakty</a>
+            <Link to="/contacts">Kontakty</Link>
           </li>
         </ul>
 

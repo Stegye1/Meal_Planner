@@ -1,21 +1,22 @@
 .home {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
+  margin: 0;
+  padding: 20px 40px;
   text-align: center;
   font-family: system-ui, sans-serif;
+  background-color: #D6D85D;  
 }
 
 .home__title {
   font-size: 2.5rem;
-  font-weight: bold;
+  font-weight: 400;
   margin-bottom: 1rem;
+  color: #F68537;
 }
 
 .home__subtitle {
   font-size: 1.75rem;
   font-weight: 600;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   color: #2d3748;
 }
 
@@ -33,14 +34,16 @@
 }
 
 .benefits {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 2rem;
   margin-bottom: 3rem;
   text-align: left;
-  padding: 4px 20px;
-  border: 1px solid #e7e4e4;
-  border-radius: 8px;
+}
+
+.benefit {
+    background-color: #ECEDB0;
+    padding: 10px;
 }
 
 .benefit__title {
@@ -58,18 +61,21 @@
 
 .cta {
   margin-top: 2rem;
+  text-align: center;
 }
 
 .cta__button {
-  background-color: #38a169;
+  background-color: #F68537;;
   color: white;
   font-size: 1.1rem;
   font-weight: 600;
   padding: 0.75rem 2rem;
+  margin-bottom: 8px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s ease;
+  text-decoration: none;
 }
 
 .cta__button:hover {
@@ -79,5 +85,16 @@
 .cta__note {
   font-size: 0.9rem;
   color: #666;
-  margin-top: 0.75rem;
+  margin-top: 1rem;
+  font: italic;
+
 }
+
+#home-hero-img {
+  max-width: 480px;   /* obrázek nikdy nepřesáhne šířku rodiče */
+  height: auto;      /* výška se dopočítá podle poměru stran */
+  display: block;    /* odstraní mezery u inline obrázků */
+  margin: 0 auto;    /* volitelné – zarovnání na střed */
+}
+
+

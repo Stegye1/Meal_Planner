@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 
 const rootElement = document.getElementById('root');
+console.log("rootElement: ", rootElement)
 if (!rootElement) throw new Error('Root element not found');
 
 const root = ReactDOM.createRoot(rootElement);

@@ -1,8 +1,8 @@
 /* Reset a základní styl */
 html, #root {
   height: 100%;
-  margin: 0;
- 
+  width: 100%;
+  margin: 0; 
   display: flex;
   flex-direction: column;
  
@@ -22,11 +22,10 @@ main {
 .header {
   position: sticky;
   top: 0; 
-  background-color: rgba(253, 251, 241, 0.95);
-  color: rgba(0, 0, 0, 0.567);
+  background-color: #D6D85D;  
   padding: 5px 20px;
   z-index: 1000;
-  box-shadow: 0 2px 5px rgba(223, 187, 54, 0.336);
+/*  box-shadow: 0 2px 5px #D6D85D; */
 }
 
 .logo img {
@@ -44,17 +43,11 @@ main {
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 20px;
+  gap: 30px;
   margin-right: auto;
   padding: 0;
 }
 
-.nav-links a {
-  color: rgba(0, 0, 0, 0.567);
-  text-decoration: none;
-  font-weight: 600;
-  
-}
 
 .nav-action {
   background-color: black;
@@ -63,14 +56,29 @@ main {
   border-radius: 5px;
   text-decoration: none;
   font-weight: 600;
+  display: inline-block; 
+  transition: transform 0.5s ease, color 0.4s ease; 
+}
+
+.nav-links a {
+  display: inline-block; 
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.3s ease, color 0.3s ease; 
 }
 
 .nav-links a:hover {
-  text-decoration: underline;
+  transform: scale(1.3);
+  color: hsl(0, 0%, 98%); 
+  font-weight: 700;
 }
 
-.nav-action a:hover {
-  background-color: #a09a9a;
+.nav-action:hover {
+   color: hsl(0, 0%, 98%); 
+  transform: scale(1.3);
+  font-weight: 700;
+  cursor: pointer;
 }
 
 
@@ -112,3 +120,21 @@ main {
   padding: 15px 10px; 
   font-size: 0.9rem;
 }
+
+.two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;  
+  align-items: start;
+  gap: 60px
+}
+
+.list-item {
+  padding: 4px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;  
+  align-items: start;
+  gap: 40px;
+  margin-left: 0;
+}
+
+
