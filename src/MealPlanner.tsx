@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { days, DefaultWeekPlan, meals } from "./mockData";
 import { WeekPlan, MealType, Day } from "./types";
 import { DayMealSelector } from "./components/DayMealSelector";
@@ -22,23 +22,20 @@ export function MealPlanner() {
 
   return (
     <main className="main-content">
- 
-      <div  id="plan">
-      <div id="meal-planner">
-        <h2>Můj týdenní jídelníček</h2>     
-      {days.map((day) => (
-        <DayMealSelector
-          key={day}
-          day={day}
-          plan={plan}
-          selectMeal={selectMeal}
-        />
-      ))}
-      </div>
-     
-       
-      <ShoppingList plan={plan} />
-     
+      <div id="plan">
+        <div id="meal-planner">
+          <h2 className="orange">Můj týdenní jídelníček</h2>
+          {days.map((day) => (
+            <DayMealSelector
+              key={day}
+              day={day}
+              plan={plan}
+              selectMeal={selectMeal}
+            />
+          ))}
+        </div>
+
+        <ShoppingList plan={plan} />
       </div>
     </main>
   );

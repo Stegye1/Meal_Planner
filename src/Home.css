@@ -3,14 +3,14 @@
   padding: 20px 40px;
   text-align: center;
   font-family: system-ui, sans-serif;
-  background-color: #D6D85D;  
+  background-color: rgba(214, 216, 93, 0.9);
 }
 
 .home__title {
   font-size: 2.5rem;
   font-weight: 400;
   margin-bottom: 1rem;
-  color: #F68537;
+  color: #f68537;
 }
 
 .home__subtitle {
@@ -42,8 +42,8 @@
 }
 
 .benefit {
-    background-color: #ECEDB0;
-    padding: 10px;
+  background-color: #ecedb0;
+  padding: 10px;
 }
 
 .benefit__title {
@@ -65,7 +65,7 @@
 }
 
 .cta__button {
-  background-color: #F68537;;
+  background-color: #f68537;
   color: white;
   font-size: 1.1rem;
   font-weight: 600;
@@ -87,14 +87,11 @@
   color: #666;
   margin-top: 1rem;
   font: italic;
-
 }
 
 #home-hero-img {
-  max-width: 480px;   /* obrázek nikdy nepřesáhne šířku rodiče */
-  height: auto;      /* výška se dopočítá podle poměru stran */
-  display: block;    /* odstraní mezery u inline obrázků */
-  margin: 0 auto;    /* volitelné – zarovnání na střed */
+  max-width: 480px; /* obrázek nikdy nepřesáhne šířku rodiče */
+  height: auto; /* výška se dopočítá podle poměru stran */
+  display: block; /* odstraní mezery u inline obrázků */
+  margin: 0 auto; /* volitelné – zarovnání na střed */
 }
-
-

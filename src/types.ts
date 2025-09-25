@@ -1,21 +1,21 @@
-// types.ts
-export type MealType = 'breakfast' | 'lunch' | 'dinner';
+export type MealType = "breakfast" | "lunch" | "dinner";
 
 export interface Meal {
   id: number;
   name: string;
-  types: MealType[];  // kde se má jídlo nabízet
+  types: MealType[]; 
   ingredients: string[];
 }
 
-export interface DailyPlan {
-  breakfast?: Meal;
-  lunch?: Meal;
-  dinner?: Meal;
-}
+export type DailyPlan = Partial<Record<MealType, Meal>>;
 
-export type Day = 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
+export type Day =
+  | "Monday"
+  | "Tuesday"
+  | "Wednesday"
+  | "Thursday"
+  | "Friday"
+  | "Saturday"
+  | "Sunday";
 
-export type WeekPlan = {
-  [day in Day]: DailyPlan;
-}
+export type WeekPlan = Record<Day, DailyPlan>;

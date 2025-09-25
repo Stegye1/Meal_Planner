@@ -1,4 +1,3 @@
-// mockData.ts
 import { Day, Meal, MealType } from "./types";
 
 export const meals: Meal[] = [

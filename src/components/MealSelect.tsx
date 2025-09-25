@@ -1,4 +1,3 @@
-import React from "react";
 import { MealType, Day, Meal } from "../types";
 import { meals } from "../mockData";
 

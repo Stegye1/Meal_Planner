@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { WeekPlan } from "../types";
+import { useState, useEffect, useMemo } from "react";
+import { MealType, WeekPlan } from "../types";
 
 type Props = {
   plan: WeekPlan;
@@ -11,8 +11,8 @@ export function ShoppingList({ plan }: Props) {
     return Array.from(
       new Set(
         Object.values(plan).flatMap((dayPlan) =>
-          ["breakfast", "lunch", "dinner"].flatMap((mealType) => {
-            const meal = (dayPlan as any)[mealType];
+          (Object.keys(dayPlan) as MealType[]).flatMap((mealType) => {
+            const meal = dayPlan[mealType];
             return meal ? meal.ingredients : [];
           })
         )
@@ -31,19 +31,32 @@ export function ShoppingList({ plan }: Props) {
   // Mapování ingrediencí na jídla pro tooltip
   const ingredientToMealsMap = useMemo(() => {
     const map: Record<string, string[]> = {};
+
     Object.entries(plan).forEach(([day, dayPlan]) => {
       ["breakfast", "lunch", "dinner"].forEach((mealType) => {
         const meal = (dayPlan as any)[mealType];
-        if (meal && meal.ingredients) {
+        if (meal && meal.ingredients && meal.name) {
           meal.ingredients.forEach((ingredient: string) => {
             if (!map[ingredient]) {
               map[ingredient] = [];
             }
-            map[ingredient].push(`${mealType} (${day})`);
+            map[ingredient].push(meal.name);
           });
         }
       });
     });
+
+    // sloučí duplicity a přidá počty (např. "2 × kuřecí salát")
+    Object.keys(map).forEach((ingredient) => {
+      const counts: Record<string, number> = {};
+      map[ingredient].forEach((mealName) => {
+        counts[mealName] = (counts[mealName] || 0) + 1;
+      });
+      map[ingredient] = Object.entries(counts).map(([mealName, count]) =>
+        count > 1 ? `${count} × ${mealName}` : mealName
+      );
+    });
+
     return map;
   }, [plan]);
 
@@ -53,11 +66,15 @@ export function ShoppingList({ plan }: Props) {
 
   return (
     <section id="shopping-list">
-      <h2>Nákupní seznam</h2>
+      <h2 className="orange">Nákupní seznam</h2>
       {shoppingList.length > 0 ? (
         <ul>
           {shoppingList.map((item) => (
-            <li key={item} className="list-item" style={{ position: "relative" }}>
+            <li
+              key={item}
+              className="list-item"
+              style={{ position: "relative" }}
+            >
               <span
                 style={{ cursor: "pointer", textDecoration: "underline" }}
                 title={`Používá se v: ${ingredientToMealsMap[item].join(", ")}`}
@@ -80,35 +97,3 @@ export function ShoppingList({ plan }: Props) {
     </section>
   );
 }
-
-
-
-/*
-export function ShoppingList({ plan }: Props) {
-  const shoppingList = Array.from(
-    new Set(
-      Object.values(plan).flatMap((dayPlan) =>
-        ["breakfast", "lunch", "dinner"].flatMap((mealType) => {
-          const meal = (dayPlan as any)[mealType];
-          return meal ? meal.ingredients : [];
-        })
-      )
-    )
-  );
-
-  return (
-    <section id="shopping-list">
-      <h2>Nákupní seznam</h2>
-      {shoppingList.length > 0 ? (
-        <ul>
-          {shoppingList.map((item, index) => (
-            <li key={index}>{item}</li>
-          ))}
-        </ul>
-      ) : (
-        <p>Žádná jídla nebyla vybrána.</p>
-      )}
-    </section>
-  );
-}
-  */
