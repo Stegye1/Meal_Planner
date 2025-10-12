@@ -57,8 +57,7 @@ export function Home() {
               Využiji všechny suroviny naplno, nakupuji jen to, co skutečně
               potřebuji.
             </p>
-          </div>{" "}
-          {/* Výzva k akci */}
+          </div>
         </section>
       </div>
 

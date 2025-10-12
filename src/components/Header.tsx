@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 
-export function Header() {
+interface HeaderProps {
+  headerAction?: React.ReactNode;
+}
+
+export function Header({ headerAction }: HeaderProps) {
   return (
     <header className="header">
       <nav className="nav">
@@ -30,9 +34,8 @@ export function Header() {
           </li>
         </ul>
 
-        <button className="nav-action" onClick={() => window.print()}>
-          Vytisknout
-        </button>
+        <div className="nav-action">{headerAction}</div>
+        
       </nav>
     </header>
   );
