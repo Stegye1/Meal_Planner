@@ -129,17 +129,15 @@ main {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
-  justify-items:flex-start;
-  margin-bottom: 8px
+  justify-items: flex-start;
+  margin-bottom: 8px;
 }
 
 .meal-window {
   width: 40 rem;
   height: 3 rem;
   background-color: rgb(253, 253, 218);
-  
 }
-
 
 /* Footer pevný dole */
 .footer {
@@ -171,10 +169,14 @@ main {
   padding: 4px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  align-items: start;
+  justify-items: flex-start;
   gap: 40px;
   margin-left: 0;
   padding-left: 0;
+}
+
+.list-item button, span {
+  cursor: pointer;
 }
 
 .orange {

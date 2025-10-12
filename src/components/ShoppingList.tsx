@@ -76,13 +76,13 @@ export function ShoppingList({ plan }: Props) {
               style={{ position: "relative" }}
             >
               <span
-                style={{ cursor: "pointer", textDecoration: "underline" }}
+              
                 title={`Používá se v: ${ingredientToMealsMap[item].join(", ")}`}
               >
                 {item}
               </span>
               <button
-                style={{ marginLeft: 10 }}
+              
                 onClick={() => handleRemove(item)}
                 aria-label={`Zrušit ${item}`}
               >
