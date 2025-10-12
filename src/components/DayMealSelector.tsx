@@ -10,14 +10,8 @@ type Props = {
 
 export function DayMealSelector({ day, plan, selectMeal }: Props) {
   return (
-    <section
-      style={{
-        marginBottom: 20,
-        borderBottom: "1px solid #ccc",
-        paddingBottom: 10,
-      }}
-    >
-      <h3>{day}</h3>
+    <section>
+      <h3 className="left">{day}</h3>
       {mealTypes.map(({ label, value }) => (
         <MealSelect
           key={value}

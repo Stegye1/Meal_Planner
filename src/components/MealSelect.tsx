@@ -18,9 +18,10 @@ export function MealSelect({
 }: Props) {
   const options = meals.filter((m) => m.types.includes(mealType));
   return (
-    <div style={{ marginBottom: 8 }}>
+    <div className="day-meal-selector">
       <label>{label}: </label>
       <select
+    className="meal-window"
         value={selectedMeal?.id ?? ""}
         onChange={(e) =>
           selectMeal(
@@ -30,7 +31,7 @@ export function MealSelect({
           )
         }
       >
-        <option value="">-- vyberte jídlo --</option>
+        <option  value="">-- vyberte jídlo --</option>
         {options.map((meal) => (
           <option key={meal.id} value={meal.id}>
             {meal.name}
