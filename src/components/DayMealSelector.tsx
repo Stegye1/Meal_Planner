@@ -1,11 +1,11 @@
-import { Day, MealType, WeekPlan, Meal } from "../types";
+import { Day, MealType, WeekPlan } from "../types";
 import { MealSelect } from "./MealSelect";
 import { mealTypes } from "../mockData";
 
 type Props = {
   day: Day;
   plan: WeekPlan;
-  selectMeal: (day: Day, type: MealType, mealId: number | undefined) => void;
+  selectMeal: (day: Day, type: MealType, mealId: string | undefined, servings: number) => void;
 };
 
 export function DayMealSelector({ day, plan, selectMeal }: Props) {
@@ -18,8 +18,9 @@ export function DayMealSelector({ day, plan, selectMeal }: Props) {
           day={day}
           mealType={value}
           label={label}
-          selectedMeal={plan[day]?.[value]}
+          selectedMeal={plan[day]?.[value]?.meal}
           selectMeal={selectMeal}
+          servings={plan[day]?.[value]?.servings ?? 1}
         />
       ))}
     </section>

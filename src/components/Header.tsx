@@ -34,7 +34,7 @@ export function Header({ headerAction }: HeaderProps) {
           </li>
         </ul>
 
-        <div className="nav-action">{headerAction}</div>
+        <div className="nav-action-wrapper">{headerAction}</div>
         
       </nav>
     </header>
