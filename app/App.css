@@ -1,0 +1,194 @@
+html,
+#root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+:root {
+  --bg-color: rgba(230, 232, 89, 0.9);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+/* Pevný header nahoře */
+.header {
+  position: sticky;
+  top: 0;
+  background-color: var(--bg-color);
+  padding: 5px 20px;
+  z-index: 1000;
+  backdrop-filter: blur(6px);
+  /*  box-shadow: 0 2px 5px #D6D85D; */
+}
+
+.logo img {
+  height: 50px;
+  width: auto;
+  vertical-align: middle;
+}
+
+.nav {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  margin-right: auto;
+  padding: 0;
+}
+
+.nav-links a {
+  display: inline-block;
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.nav-links a:hover {
+  transform: scale(1.3);
+  color: hsl(0, 0%, 98%);
+  font-weight: 700;
+}
+/*
+.nav-action button:hover {
+  color: hsl(0, 0%, 98%);
+  transform: scale(1.3);
+  font-weight: 700;
+  cursor: pointer;
+}
+*/
+
+.nav-action-wrapper > * {
+  background-color: black;
+  color: white;
+  padding: 4px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 600 !important;
+  display: inline-block;
+  transition: transform 0.5s ease, color 0.4s ease;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.nav-action-wrapper > *:hover {
+  transform: scale(1.15);
+  color: hsl(0, 0%, 98%);
+}
+
+/* Hlavní obsah s vyplněním prostoru */
+.main-content {
+  padding: 20px 140px;
+  flex: 1;
+  background-color: var(--bg-color);
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .main-content {
+    padding: 20px 20px;
+  }
+}
+
+#plan {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: flex;
+  gap: 20px;
+}
+
+/* malé displeje – jeden sloupec */
+@media (max-width: 640px) {
+  #plan {
+    grid-template-columns: 1fr;
+  }
+}
+
+.day-meal-selector {
+  display: grid;
+  grid-template-columns: 2fr 4fr 1fr;
+  gap: 10px;
+  margin-bottom: 8px;
+  align-items: center; /* zarovná svisle na střed */
+  justify-items: start; /* všechny prvky doleva */
+  text-align: left;
+}
+
+.meal-window { 
+  height: 3 rem;
+  background-color: rgb(253, 253, 218);
+}
+
+
+.portions-window { 
+  height: 2 rem;
+  background-color: rgb(253, 253, 218);
+  width: 28px;
+}
+
+/* Footer pevný dole */
+.footer {
+  background-color: rgba(0, 0, 0, 0.784);
+  color: white;
+  text-align: center;
+  padding: 15px 10px;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 640px) {
+  .footer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px 5px;
+    font-size: 0.8rem;
+  }
+}
+
+.two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  gap: 60px;
+}
+
+.list-item {
+  padding: 4px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: flex-start;
+  gap: 40px;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.list-item button, span {
+  cursor: pointer;
+}
+
+.orange {
+  color: #f68537;
+  font-size: 1.75rem;
+  font-weight: 400;
+}
+
+.left {
+  text-align: left;
+}
