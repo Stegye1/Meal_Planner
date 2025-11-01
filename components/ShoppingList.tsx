@@ -2,8 +2,8 @@
 
 import { useState, useMemo, useEffect } from "react";
 
-import { WeekPlan, MealType } from "../types";
-import { ingredients } from "../../app/mock-data"; // import centrálního seznamu ingrediencí
+import { WeekPlan, MealType } from "../app/types";
+import { ingredients } from "../mock-data"; // import centrálního seznamu ingrediencí
 
 type Props = {
   plan: WeekPlan;

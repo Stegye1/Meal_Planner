@@ -1,5 +1,5 @@
-import { RecipeCard } from "../components/RecipeCard";
-import { meals } from "../mock-data";
+import { RecipeCard } from "../../components/RecipeCard";
+import { meals } from "../../mock-data";
 import "./Recipes.css";
 
 export default function Recipes() {

@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation";
 
-import { meals, ingredients } from "../../mock-data";
+import { meals, ingredients } from "../../../mock-data";
 import "../Recipes.css";
 
 export default function RecipeDetail() {

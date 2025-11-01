@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import "../Recipes.css";
-import { meals, ingredients, mealTypes } from "../../mock-data"; 
+import { meals, ingredients, mealTypes } from "../../../mock-data"; 
 
 export default function NewRecipePage() {
   const router = useRouter();

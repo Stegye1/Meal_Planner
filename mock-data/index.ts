@@ -1,4 +1,4 @@
-import { Day, Ingredient, Meal, MealType } from "../../types";
+import { Day, Ingredient, Meal, MealType } from "../types";
 
 export const ingredients: Ingredient[] = [
   { id: "1", name: "ovesné vločky", unit: "g" },

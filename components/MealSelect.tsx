@@ -1,5 +1,7 @@
-import { MealType, Day, Meal } from "../types";
-import { meals } from "../../app/mock-data";
+
+
+import { MealType, Day, Meal } from "../app/types";
+import { meals } from "../mock-data";
 
 type Props = {
   day: Day;

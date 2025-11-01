@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 
-import { days, DefaultWeekPlan, meals, mealTypes } from "../mock-data";
+import { days, DefaultWeekPlan, meals, mealTypes } from "../../mock-data";
 import { WeekPlan, MealType, Day, PlannedMeal } from "../types";
-import { DayMealSelector } from "../components/DayMealSelector";
-import { ShoppingList } from "../components/ShoppingList";
+import { DayMealSelector } from "../../components/DayMealSelector";
+import { ShoppingList } from "../../components/ShoppingList";
 
 export default function Planner() {
   const [plan, setPlan] = useState<WeekPlan>(DefaultWeekPlan);
