@@ -1,0 +1,216 @@
+.recipes-page {
+  padding: 20px 60px;
+  background-color: var(--bg-color);
+  text-align: center;
+}
+
+.recipe-detail {
+  padding: 20px 60px;
+  background-color: var(--bg-color);  
+  text-align: start
+}
+
+.recipes-intro {
+  color: #444;
+  margin-bottom: 20px;
+}
+
+.recipes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.recipe-card {
+  background-color: #fffef3;
+  border-radius: 16px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  padding: 16px;
+  text-align: left;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none
+}
+
+.recipe-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+}
+
+.recipe-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.recipe-img-detail {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.recipe-img-empty {
+  width: 100%;
+  height: 200px;
+  background-color: #fffef3;
+  object-fit: cover;
+  border-radius: 10px;
+  text-align: center;
+  line-height: 200px;
+  border-style: solid;
+  border-color: #fefbd9;
+color: #f3e897;
+}
+
+.recipe-title {
+  margin-top: 10px;
+  color: #f68537;
+}
+
+.recipe-info {
+  margin: 8px 0;
+  font-size: 0.95rem;
+}
+
+.recipe-ingredients ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.recipe-steps p {
+  margin-top: 5px;
+  color: #555;
+}
+
+/* ----------nový recept--------------- */
+.new-recipe-form {
+  
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Label a pole vedle sebe, label vlevo, pole vpravo */
+.new-recipe-form label {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  gap: 1rem;
+  white-space: nowrap;
+
+}
+
+/* Text labela zabírá pevnou šířku a je zarovnán vlevo */
+.new-recipe-form label > :first-child {
+  flex: 0 0 120px; /* šířka labelu */
+  text-align: left;
+}
+
+.new-recipe-form fieldset {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%
+}
+
+/* Pole pro vyplnění (input, textarea, select) výplní zbytek místa */
+.new-recipe-form input[type="text"],
+.new-recipe-form textarea,
+.new-recipe-form select {
+  flex: 1;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.new-recipe-form input[type="number"] {
+  width: 3rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Checkboxy - label jako flex s políčkem napravo */
+.new-recipe-form fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;  
+}
+
+.new-recipe-form fieldset legend {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.new-recipe-form fieldset label {
+  display: flex;
+  align-items: start;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+/* Checkbox má pointer */
+.new-recipe-form input[type="checkbox"] {
+  cursor: pointer;
+  width: 3rem;
+}
+
+
+
+.new-recipe-form fieldset > label > input[type="checkbox"] {
+  margin: 0;
+}
+
+/* U seznamu ingrediencí - tlačítka a input s pointerem */
+.new-recipe-form button,
+.new-recipe-form input[type="number"] [min="1"] {
+  cursor: pointer;
+  width: 4rem;
+}
+
+/* Tlačítko odebrat ingredienci */
+.new-recipe-form button[aria-label="Odebrat ingredienci"] {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  padding: 0;
+  cursor: pointer;
+  color: #d00;
+}
+
+/* Hlavní tlačítko uložit */
+.new-recipe-form > button[type="submit"] {
+  align-self: flex-end;
+  padding: 0.5rem 1rem;
+  background-color: #f97316; 
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 10rem
+ 
+}
+
+.new-recipe-form > button[type="submit"]:hover {
+  background-color: #ea580c;
+  
+}
+
+.meal-types {
+    display: flex;
+    gap: 3rem;
+    align-items: flex-start
+}
+
+textarea {
+    width: full
+}
+
+
