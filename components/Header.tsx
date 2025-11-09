@@ -37,15 +37,15 @@ export function Header({ headerAction: headerActionProp }: HeaderProps) {
 
   let headerAction;
   if (pathname === "/planner") {
-    headerAction = <button onClick={() => window.print()}>Vytisknout</button>;
+    headerAction = <button className="nav-action" onClick={() => window.print()}>Vytisknout</button>;
   } else if (pathname === "/welcome") {
     headerAction = user ? (
-      <button onClick={handleLogout}>Odhlásit se</button>
+      <button className="nav-action" onClick={handleLogout}>Odhlásit se</button>
     ) : (
-      <button onClick={() => setShowLogin(true)}>Registrace/Přihlášení</button>
+      <button className="nav-action" onClick={() => setShowLogin(true)}>Registrace/Přihlášení</button>
     );
   } else if (pathname === "/recipes") {
-    headerAction = <Link href="/recipes/new">Přidat recept</Link>;
+    headerAction = <div className="flex"><Link className="nav-action" href="/recipes/new-recipe/">Přidat recept</Link><Link className="nav-action" href="/recipes/new-ingredient/">Přidat ingredienci</Link></div>
   }
 
   if (!headerAction && headerActionProp) {
@@ -61,27 +61,27 @@ export function Header({ headerAction: headerActionProp }: HeaderProps) {
 
         <ul className="nav-links">
           <li>
-            <a href="/">Úvod</a>
+            <Link href="/">Úvod</Link>
           </li>
 
           <li>
-            <a href="/planner">Plánování jídelníčku</a>
+            <Link href="/planner">Plánování jídelníčku</Link>
           </li>
 
           <li>
-            <a href="/videos">Videa</a>
+            <Link href="/videos">Videa</Link>
           </li>
 
           <li>
-            <a href="/recipes">Recepty</a>
+            <Link href="/recipes">Recepty</Link>
           </li>
 
           <li>
-            <a href="/contacts">Kontakty</a>
+            <Link href="/contacts">Kontakty</Link>
           </li>
         </ul>
 
-        <div className="nav-action-wrapper">{headerAction}</div>
+        <div>{headerAction}</div>
       </nav>
     </header>
   );

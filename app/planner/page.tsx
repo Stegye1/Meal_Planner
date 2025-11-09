@@ -2,10 +2,31 @@
 
 import { useState } from "react";
 
-import { days, DefaultWeekPlan, meals, mealTypes } from "../../mock-data";
+// import { days, DefaultWeekPlan, meals, mealTypes } from "../../mock-data";
 import { WeekPlan, MealType, Day, PlannedMeal } from "../types";
 import { DayMealSelector } from "../../components/DayMealSelector";
 import { ShoppingList } from "../../components/ShoppingList";
+import { mealTypes } from "@/components/Recipeform";
+
+export const days: Day[] = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
+
+export const DefaultWeekPlan = {
+  Monday: {},
+  Tuesday: {},
+  Wednesday: {},
+  Thursday: {},
+  Friday: {},
+  Saturday: {},
+  Sunday: {},
+};
 
 export default function Planner() {
   const [plan, setPlan] = useState<WeekPlan>(DefaultWeekPlan);

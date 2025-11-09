@@ -1,7 +1,7 @@
 
 
+import { useAllRecipesDB } from "@/lib/db/recipes";
 import { MealType, Day, Meal } from "../app/types";
-import { meals } from "../mock-data";
 
 type Props = {
   day: Day;
@@ -25,7 +25,9 @@ export function MealSelect({
   selectMeal,
   servings,
 }: Props) {
-  const options = meals.filter((m) => m.types.includes(mealType));
+
+  const meals: Meal[] | null = useAllRecipesDB()
+  const options = meals ? meals.filter((m) => m.types.includes(mealType)) : [];
 
   const onMealChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const mealId = e.target.value ? e.target.value : undefined;
@@ -34,7 +36,7 @@ export function MealSelect({
 
   const onServingsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newServings = Math.max(1, Number(e.target.value));
-    selectMeal(day, mealType, selectedMeal?.id, newServings);
+    selectMeal(day, mealType, selectedMeal?._id, newServings);
   };
 
   return (
@@ -42,12 +44,12 @@ export function MealSelect({
       <label>{label}: </label>
       <select
         className="meal-window"
-        value={selectedMeal?.id ?? ""}
+        value={selectedMeal?._id ?? ""}
         onChange={onMealChange}
       >
         <option value="">-- vyberte jídlo --</option>
         {options.map((meal) => (
-          <option key={meal.id} value={meal.id}>
+          <option key={meal._id} value={meal._id}>
             {meal.name}
           </option>
         ))}

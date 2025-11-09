@@ -1,13 +1,15 @@
+import { Id } from "@/convex/_generated/dataModel";
+
 export type MealType = "breakfast" | "lunch" | "dinner";
 
 export type Ingredient = {
-  id: string;
+  _id: Id<"ingredients">;
   name: string;
   unit: 'g' | 'ml' | 'ks' | 'stroužky'| 'špetka';
 };
 
 type IngredientAmount = {
-  ingredientId: string;
+  ingredientId: Id<"ingredients">;
   amount: number;
 };
 
@@ -19,10 +21,10 @@ type Preparation = {
 }
 
 export type Meal = {
-  id: string;
+  _id: Id<"meals">;
   name: string;
   types: MealType[];
-  imageUrl: string | null;
+  picture?: Id<"_storage"> | null;
   ingredients: IngredientAmount[];
   preparation: Preparation;
   servings: number; //pro kolik porcí jsou zadaná množství ingrediencí

@@ -2,29 +2,40 @@
 
 import { useParams } from "next/navigation";
 
-import { meals, ingredients } from "../../../mock-data";
+//import { meals, ingredients } from "../../../mock-data";
 import "../Recipes.css";
+import { Ingredient, Meal } from "@/types";
+import { useRecipe } from "@/lib/db/recipes";
+import { useAllIngredientsDB } from "@/lib/db/ingredients";
 
 export default function RecipeDetail() {
   const params = useParams();
-  const id = params.id;
-  const recipe = meals.find((m) => m.id === id);
+  const id = params.id as string;
 
-  if (!recipe) {
-    return <p>Recept nebyl nalezen.</p>;
-  }
 
-  const recipeIngredients = recipe.ingredients.map((ing) => {
-    const ingredient = ingredients.find((i) => i.id === ing.ingredientId);
+
+  const recipe: Meal | null = useRecipe(id)
+  const ingredients: Ingredient[] | undefined = useAllIngredientsDB()
+
+   const recipeIngredients = recipe?.ingredients.map((ing) => {
+    const ingredient = ingredients?.find((i) => i._id === ing.ingredientId);
     return `${ingredient?.name} – ${ing.amount} ${ingredient?.unit}`;
   });
 
+
+  if (!recipe || !recipeIngredients) {
+    return <p>Omlouváme se, nepodařilo se načíst recept.</p>;
+  }
+
   return (
     <main className="recipe-detail">
+      { (recipe && recipeIngredients) ? (
+        <>
       <h2>{recipe.name}</h2>
-      {recipe.imageUrl ? (
+     
+      {recipe.picture ? (
         <img
-          src={recipe.imageUrl}
+          src={recipe.picture}
           alt={recipe.name}
           className="recipe-img-detail"
         />
@@ -51,6 +62,7 @@ export default function RecipeDetail() {
       <p>{recipe.preparation.secondStep}</p>
       <p>{recipe.preparation.thirdStep}</p>
       <p>{recipe.preparation.fourthStep}</p>
+      </>) : <p>Omlouváme se, nepodařilo se načíst recept.</p> }
     </main>
   );
 }

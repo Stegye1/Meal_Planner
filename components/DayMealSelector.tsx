@@ -1,6 +1,7 @@
 import { Day, MealType, WeekPlan } from "../app/types";
 import { MealSelect } from "./MealSelect";
-import { mealTypes } from "../mock-data";
+import { mealTypes } from "./Recipeform";
+
 
 type Props = {
   day: Day;

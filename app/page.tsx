@@ -1,5 +1,6 @@
 import "./Home.css";
 import "./App.css"
+import Link from "next/link";
 
 
 export default function Home() {
@@ -23,9 +24,9 @@ export default function Home() {
           </em>
 
           <div className="cta">
-            <a href="/planner/" className="cta__button">
+            <Link href="/planner/" className="action-button">
               Začněte plánovat zdarma
-            </a>
+            </Link>
             <p className="cta__note">Můžete okamžitě vyzkoušet</p>
           </div>
         </section>
