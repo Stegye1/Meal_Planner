@@ -1,14 +1,19 @@
 "use client";
 
-import { useAllRecipesDB } from "@/lib/db/recipes";
+import { useGetAllIngredientsDB } from "@/lib/db/ingredients";
+import { useGetAllRecipesDB } from "@/lib/db/recipes";
 import { RecipeCard } from "../../components/RecipeCard";
-import { Meal } from "../types";
+
 //import { meals } from "../../mock-data";
 import "./Recipes.css";
 
-export default function Recipes() {
+import Link from "next/link";
+import { Ingredient, Meal } from "@/types";
 
-  const recipes:Meal[] | null = useAllRecipesDB()
+
+export default function Recipes() {
+  const recipes: Meal[] | null = useGetAllRecipesDB();
+  const ingredients: Ingredient[] | null = useGetAllIngredientsDB();
 
   return (
     <main className="recipes-page">
@@ -17,12 +22,28 @@ export default function Recipes() {
         Zde najdete všechny recepty z databáze. Později přidáme vyhledávání a
         filtrování podle typu jídla.
       </p>
-{recipes ? (
-      <div className="recipes-grid">
-        {recipes.map((meal) => (
-          <RecipeCard key={meal._id} meal={meal} />
-        ))}
-      </div> ) : <p>Omlouváme se, nepodařilo se načíst recepty.</p> }
+      {recipes ? (
+        <div className="recipes-grid">
+          {recipes.map((meal) => (
+            <RecipeCard key={meal._id} meal={meal} />
+          ))}
+        </div>
+      ) : (
+        <p>Omlouváme se, nepodařilo se načíst recepty.</p>
+      )}
+
+      <h2 className="ingredients-h2">Ingredience</h2>
+      {ingredients ? (
+        <div className="ingredients-grid">
+          {ingredients.map((ingr) => (
+            <Link href={`/ingredients/${ingr._id}/`} key={ingr._id}>
+              {ingr.name}
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <p>Omlouváme se, nepodařilo se načíst ingredience.</p>
+      )}
     </main>
   );
 }

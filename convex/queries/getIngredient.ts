@@ -2,12 +2,12 @@
 import { query } from "../_generated/server";
 import { v } from "convex/values";
 
-export const getRecipe = query({
+export const getIngredient = query({
   args: {
-    id: v.id("meals"),
+    id: v.id("ingredients"),
   },
   handler: async (ctx, { id }) => {
-    const recipe = await ctx.db.get(id);
-    return recipe; 
+    const ingredient = await ctx.db.get(id);
+    return ingredient; 
   },
 });

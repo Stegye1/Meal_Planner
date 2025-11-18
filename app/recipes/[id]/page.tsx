@@ -5,22 +5,27 @@ import { useParams } from "next/navigation";
 //import { meals, ingredients } from "../../../mock-data";
 import "../Recipes.css";
 import { Ingredient, Meal } from "@/types";
-import { useRecipe } from "@/lib/db/recipes";
-import { useAllIngredientsDB } from "@/lib/db/ingredients";
+
+import { useGetAllIngredientsDB } from "@/lib/db/ingredients";
+import { useGetRecipeDB } from "@/lib/db/recipes";
+import { Id } from "@/convex/_generated/dataModel";
+import Link from "next/link";
+
 
 export default function RecipeDetail() {
   const params = useParams();
-  const id = params.id as string;
+  const id = params.id as Id<"meals">;
 
 
 
-  const recipe: Meal | null = useRecipe(id)
-  const ingredients: Ingredient[] | undefined = useAllIngredientsDB()
+  const recipe: Meal | null = useGetRecipeDB(id)
+  const ingredients: Ingredient[] | null = useGetAllIngredientsDB()
 
    const recipeIngredients = recipe?.ingredients.map((ing) => {
     const ingredient = ingredients?.find((i) => i._id === ing.ingredientId);
     return `${ingredient?.name} – ${ing.amount} ${ingredient?.unit}`;
   });
+
 
 
   if (!recipe || !recipeIngredients) {
@@ -33,9 +38,9 @@ export default function RecipeDetail() {
         <>
       <h2>{recipe.name}</h2>
      
-      {recipe.picture ? (
+      {recipe.pictureUrl ? (
         <img
-          src={recipe.picture}
+          src={recipe.pictureUrl}
           alt={recipe.name}
           className="recipe-img-detail"
         />
@@ -63,6 +68,11 @@ export default function RecipeDetail() {
       <p>{recipe.preparation.thirdStep}</p>
       <p>{recipe.preparation.fourthStep}</p>
       </>) : <p>Omlouváme se, nepodařilo se načíst recept.</p> }
+
+      
+      <Link className="button" href={`/recipes/${id}/change-recipe`}>
+        Upravit
+      </Link>
     </main>
   );
 }

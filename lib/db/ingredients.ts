@@ -1,6 +1,10 @@
 // lib/db/ingredients.ts
 import { api } from "@/convex/_generated/api";
 import { useMutation, useQuery } from "convex/react";
+import { Id } from "@/convex/_generated/dataModel";
+
+
+/*---------------vložení nové ingredience------------*/
 
 export function useAddIngredientDB() {
   const addIngredient = useMutation(api.mutations.addIngredient.addIngredient);
@@ -9,45 +13,45 @@ export function useAddIngredientDB() {
     addIngredient: async (data: {
       name: string;
       unit: "g" | "ml";
-      nutrients: [number, number, number, number];
-    }) => addIngredient(data),
+      nutrients: number[];
+    }) => {
+      const id = await addIngredient(data);
+      return id; // vrací ID nové ingredience
+    },
   };
 }
 
+/*---------------úprava existující ingredience--------------*/
 
-export function useAllIngredientsDB() {
-  const getAllIngredients = useQuery(api.queries.getAllIngredients.getAllIngredients)
-  return getAllIngredients
+export function useUpdateIngredientDB()  {
+  const updateIngredient = useMutation(api.mutations.updateIngredient.updateIngredient);
+ 
+  return {
+    updateIngredient: async (data: {
+      _id: Id<"ingredients">;
+      name: string;
+      unit: "g" | "ml";
+      nutrients: [number, number, number, number];
+    }) => {const id = await updateIngredient(data);
+      return id; } // vrací ID upravené ingredience
+  };   
 }
 
-
-
-// import { api } from "../../convex/_generated/api";
-
-
-// // lib/db/recipes.ts
-// import { createIngredient } from "@/convex/mutations/createIngredient";
-// import { useMutation } from "convex/react";
-
-
-
-// export type MealType = "breakfast" | "lunch" | "dinner";
-
-// export type Nutrients = [kcal: number, fat: number, carbohydrates: number, protein: number]
-
-// export type DBIngredient = {
-//   _id: string;
-//   name: string;
-//   unit: 'g' | 'ml' 
-//   // jak naložit s jednotkami jako 'ks' | 'stroužky'| 'špetka' ? Potřebujeme je do receptů, ale pro 
-//   // výpočet nutričních hodnot a pro výpočet množství do nákupního seznamu je potřebujeme mít převedené na g / ml
-//   nutrients: Nutrients  //na 100g nebo 100ml
-// };
+/*---------------získání všech ingrediencí z db--------------*/
  
-// export const addIngredient = async (data: Omit<DBIngredient, "_id" | "createdAt">) => {
-//  // const { createIngredient } = await import("@/convex/mutations/createIngredient");
-//   const mutation = (await import("convex/react")).useMutation;
-//   const m = mutation(createIngredient);
-//   return m(data);
-// };
+export function useGetAllIngredientsDB() {
+  const ingredients = useQuery(api.queries.getAllIngredients.getAllIngredients, {})
+if (!ingredients) return null;
+  return ingredients
+}
 
+/*----------------získání ingredience z db podle id-----------*/
+
+export function useGetIngredientDB(id: Id<"ingredients"> | null) {
+  const ingredient = useQuery(
+    api.queries.getIngredient.getIngredient,
+    id ? { id } : "skip"
+  );
+    if (!ingredient) return null;
+  return ingredient
+}

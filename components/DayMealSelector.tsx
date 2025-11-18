@@ -1,4 +1,5 @@
-import { Day, MealType, WeekPlan } from "../app/types";
+
+import { Day, MealType, WeekPlan } from "@/types";
 import { MealSelect } from "./MealSelect";
 import { mealTypes } from "./Recipeform";
 

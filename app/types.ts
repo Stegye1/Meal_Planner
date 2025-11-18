@@ -1,3 +1,4 @@
+/* motají se mi tu dva soubory s typy, potřebuji sjednotit
 import { Id } from "@/convex/_generated/dataModel";
 
 export type MealType = "breakfast" | "lunch" | "dinner";
@@ -7,6 +8,8 @@ export type Ingredient = {
   name: string;
   unit: 'g' | 'ml' | 'ks' | 'stroužky'| 'špetka';
 };
+
+
 
 type IngredientAmount = {
   ingredientId: Id<"ingredients">;
@@ -47,3 +50,4 @@ export type Day =
   | "Sunday";
 
 export type WeekPlan = Record<Day, DayPlan>;
+*/

@@ -1,15 +1,16 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import { WeekPlan, MealType } from "../app/types";
-import { useAllIngredientsDB } from "@/lib/db/ingredients";
+
+import { useGetAllIngredientsDB } from "@/lib/db/ingredients";
+import { MealType, WeekPlan } from "@/types";
 
 type Props = {
   plan: WeekPlan;
 };
 
 export function ShoppingList({ plan }: Props) {
-  const ingredients = useAllIngredientsDB();
+  const ingredients = useGetAllIngredientsDB();
 
   // 🔹 1️⃣ Ošetříme, že useMemo se může spustit i bez dat
   const ingredientMap = useMemo(() => {

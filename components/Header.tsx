@@ -45,7 +45,7 @@ export function Header({ headerAction: headerActionProp }: HeaderProps) {
       <button className="nav-action" onClick={() => setShowLogin(true)}>Registrace/Přihlášení</button>
     );
   } else if (pathname === "/recipes") {
-    headerAction = <div className="flex"><Link className="nav-action" href="/recipes/new-recipe/">Přidat recept</Link><Link className="nav-action" href="/recipes/new-ingredient/">Přidat ingredienci</Link></div>
+    headerAction = <div className="flex"><Link className="nav-action" href="/recipes/new-recipe/">Přidat recept</Link><Link className="nav-action" href="/ingredients/new-ingredient/">Přidat ingredienci</Link></div>
   }
 
   if (!headerAction && headerActionProp) {

@@ -12,6 +12,7 @@ export const addIngredient = mutation({
       name,
       unit,
       nutrients
-    });
+    });   
   }
 });
+// insert automaticky vrací id nové položky, není potřeba to tam psát

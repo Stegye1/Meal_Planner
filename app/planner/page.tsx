@@ -3,10 +3,11 @@
 import { useState } from "react";
 
 // import { days, DefaultWeekPlan, meals, mealTypes } from "../../mock-data";
-import { WeekPlan, MealType, Day, PlannedMeal } from "../types";
+import { WeekPlan, MealType, Day, PlannedMeal, Meal } from "../types";
 import { DayMealSelector } from "../../components/DayMealSelector";
 import { ShoppingList } from "../../components/ShoppingList";
 import { mealTypes } from "@/components/Recipeform";
+import { useGetAllRecipesDB } from "@/lib/db/recipes";
 
 export const days: Day[] = [
   "Monday",
@@ -30,7 +31,9 @@ export const DefaultWeekPlan = {
 
 export default function Planner() {
   const [plan, setPlan] = useState<WeekPlan>(DefaultWeekPlan);
-  const [defaultServings, setDefaultServings] = useState<number>(1); //
+  const [defaultServings, setDefaultServings] = useState<number>(1); 
+
+    const meals:Meal[] | null = useGetAllRecipesDB()
 
   function selectMeal(
     day: Day,
@@ -41,11 +44,11 @@ export default function Planner() {
     setPlan((prev: WeekPlan) => {
       const dayPlan = prev[day] || {};
       const prevEntry = dayPlan[type];
-      const prevMealId = prevEntry?.meal?.id;
+      const prevMealId = prevEntry?.meal?._id;
 
       const selectedMeal =
         mealId !== undefined
-          ? meals.find((m) => m.id === mealId && m.types.includes(type))
+          ? meals?.find((m) => m._id === mealId && m.types.includes(type))
           : undefined;
 
       // logika výběru počtu porcí:

@@ -23,7 +23,7 @@ export default defineSchema({
   meals: defineTable({
     name: v.string(),
     types: v.array(v.union(v.literal("breakfast"), v.literal("lunch"), v.literal("dinner"))),
-    picture: v.optional(v.string()),
+    picture: v.optional(v.string()),  // pro uložení storageId obrázku
     ingredients: v.array(
       v.object({
         ingredientId: v.id("ingredients"),

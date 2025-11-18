@@ -4,36 +4,42 @@ import { Id } from "@/convex/_generated/dataModel";
 
 export type MealType = "breakfast" | "lunch" | "dinner";
 
-export type Nutrients = [kcal: number, fat: number, carbohydrates: number, protein: number]
+export type Nutrients = [       
+  kcal: number,
+  fat: number,
+  carbohydrates: number,
+  protein: number,
+];
 
 export type Ingredient = {
   _id: Id<"ingredients">;
   name: string;
-  unit: 'g' | 'ml' 
-  // jak naložit s jednotkami jako 'ks' | 'stroužky'| 'špetka' ? Potřebujeme je do receptů, ale pro 
+  unit: "g" | "ml";
+  // jak naložit s jednotkami jako 'ks' | 'stroužky'| 'špetka' ? Potřebujeme je do receptů, ale pro
   // výpočet nutričních hodnot a pro výpočet množství do nákupního seznamu je potřebujeme mít převedené na g / ml
-  nutrients: Nutrients  //na 100g nebo 100ml
+  nutrients: Nutrients; //na 100g nebo 100ml
 };
 
-type IngredientAmount = {
+export type IngredientAmount = {
   ingredientId: Id<"ingredients">;
   amount: number;
 };
 
-type Preparation = {
+export type Preparation = {
   firstStep: string;
   secondStep?: string;
   thirdStep?: string;
   fourthStep?: string;
-}
+};
 
 export type Meal = {
   _id: Id<"meals">;
   name: string;
   types: MealType[];
- picture?: string | null;
+  picture?: Id<"_storage">;  // storageId obrázku!
+  pictureUrl?: string | null;
   ingredients: IngredientAmount[];
-  nutrients: Nutrients;    // na 1 porci
+  nutrients: Nutrients; // na 1 porci
   preparation: Preparation;
   servings: number; //pro kolik porcí jsou zadaná množství ingrediencí
 };

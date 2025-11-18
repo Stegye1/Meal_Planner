@@ -8,7 +8,7 @@ export const addRecipe = mutation({
       v.union(v.literal("breakfast"), v.literal("lunch"), v.literal("dinner"))
     ),
     servings: v.float64(),
-    picture: v.optional(v.string()),
+    picture: v.optional(v.id("_storage")),
     preparation: v.object({
       firstStep: v.string(),
       secondStep: v.optional(v.string()),

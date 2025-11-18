@@ -1,7 +1,7 @@
+import { useGetAllRecipesDB } from "@/lib/db/recipes";
 
-
-import { useAllRecipesDB } from "@/lib/db/recipes";
-import { MealType, Day, Meal } from "../app/types";
+import { Id } from "@/convex/_generated/dataModel";
+import type { Day, Meal, MealType } from "@/types";
 
 type Props = {
   day: Day;
@@ -11,7 +11,7 @@ type Props = {
   selectMeal: (
     day: Day,
     type: MealType,
-    mealId: string | undefined,
+    mealId: Id<"meals"> | undefined,
     servings: number
   ) => void;
   servings: number;
@@ -25,12 +25,11 @@ export function MealSelect({
   selectMeal,
   servings,
 }: Props) {
-
-  const meals: Meal[] | null = useAllRecipesDB()
+  const meals: Omit<Meal, "picture">[] | null = useGetAllRecipesDB();
   const options = meals ? meals.filter((m) => m.types.includes(mealType)) : [];
 
   const onMealChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const mealId = e.target.value ? e.target.value : undefined;
+    const mealId = e.target.value ? (e.target.value as Id<"meals">) : undefined;
     selectMeal(day, mealType, mealId, servings);
   };
 
