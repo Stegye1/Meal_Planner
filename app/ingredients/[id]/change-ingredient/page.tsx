@@ -1,8 +1,8 @@
 "use client";
 
-import { IngredientForm } from "../../../../components/IngredientForm";
+import { IngredientForm } from "../../components/IngredientForm";
 
-export default function IngredientFormPage() {
+export default function ChangeIngredientPage() {
   return (
     <main className="main-content">
       <h1>Úprava ingredience</h1>

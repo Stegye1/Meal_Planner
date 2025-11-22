@@ -2,7 +2,7 @@
 
 import { useGetAllIngredientsDB } from "@/lib/db/ingredients";
 import { useGetAllRecipesDB } from "@/lib/db/recipes";
-import { RecipeCard } from "../../components/RecipeCard";
+import { RecipeCard } from "./components/RecipeCard";
 
 //import { meals } from "../../mock-data";
 import "./Recipes.css";

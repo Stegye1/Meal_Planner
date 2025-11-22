@@ -3,11 +3,13 @@
 import { useState } from "react";
 
 // import { days, DefaultWeekPlan, meals, mealTypes } from "../../mock-data";
-import { WeekPlan, MealType, Day, PlannedMeal, Meal } from "../types";
-import { DayMealSelector } from "../../components/DayMealSelector";
-import { ShoppingList } from "../../components/ShoppingList";
-import { mealTypes } from "@/components/Recipeform";
+
+
+import { ShoppingList } from "./components/ShoppingList";
+import { mealTypes } from "@/app/recipes/components/Recipeform";
 import { useGetAllRecipesDB } from "@/lib/db/recipes";
+import { Day, Meal, MealType, PlannedMeal, WeekPlan } from "@/types";
+import { DayMealSelector } from "./components/DayMealSelector";
 
 export const days: Day[] = [
   "Monday",

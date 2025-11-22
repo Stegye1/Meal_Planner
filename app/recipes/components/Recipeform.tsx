@@ -10,7 +10,7 @@ import {
   useGetRecipeDB,
   useUpdateRecipeDB,
   useUploadImageDB,
-} from "../lib/db/recipes"; // hook pro uložení receptu
+} from "../../../lib/db/recipes"; // hook pro uložení receptu
 import { IngredientAmount, Meal, MealType, Preparation } from "@/types";
 import { Id } from "@/convex/_generated/dataModel";
 import { useGetAllIngredientsDB } from "@/lib/db/ingredients";
