@@ -37,12 +37,14 @@ export type Meal = {
   name: string;
   types: MealType[];
   picture?: Id<"_storage">;  // storageId obrázku!
-  pictureUrl?: string | null;
+//  pictureUrl?: string | null;
   ingredients: IngredientAmount[];
   nutrients: Nutrients; // na 1 porci
   preparation: Preparation;
   servings: number; //pro kolik porcí jsou zadaná množství ingrediencí
 };
+
+export type MealInput = Omit<Meal, "_id" | "pictureUrl">;
 
 export type PlannedMeal = {
   meal: Meal;

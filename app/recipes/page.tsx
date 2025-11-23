@@ -1,7 +1,6 @@
 "use client";
 
-import { useGetAllIngredientsDB } from "@/lib/db/ingredients";
-import { useGetAllRecipesDB } from "@/lib/db/recipes";
+
 import { RecipeCard } from "./components/RecipeCard";
 
 //import { meals } from "../../mock-data";
@@ -9,10 +8,12 @@ import "./Recipes.css";
 
 import Link from "next/link";
 import { Ingredient, Meal } from "@/types";
+import { useGetAllIngredientsDB } from "@/lib/db/ingredients/use-get-all-ingredients-db";
+import { useGetAllMealsDB } from "@/lib/db/meals/use-get-all-meals-db";
 
 
 export default function Recipes() {
-  const recipes: Meal[] | null = useGetAllRecipesDB();
+  const recipes: Meal[] | null = useGetAllMealsDB();
   const ingredients: Ingredient[] | null = useGetAllIngredientsDB();
 
   return (

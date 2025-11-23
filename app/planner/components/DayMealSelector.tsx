@@ -1,15 +1,16 @@
-
 import { mealTypes } from "@/app/recipes/components/Recipeform";
 import { Day, MealType, WeekPlan } from "@/types";
 import { MealSelect } from "./MealSelect";
 
-
-
-
 type Props = {
   day: Day;
   plan: WeekPlan;
-  selectMeal: (day: Day, type: MealType, mealId: string | undefined, servings: number) => void;
+  selectMeal: (
+    day: Day,
+    type: MealType,
+    mealId: string | undefined,
+    servings: number
+  ) => void;
 };
 
 export function DayMealSelector({ day, plan, selectMeal }: Props) {

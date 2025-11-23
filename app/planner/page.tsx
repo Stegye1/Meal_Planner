@@ -7,9 +7,9 @@ import { useState } from "react";
 
 import { ShoppingList } from "./components/ShoppingList";
 import { mealTypes } from "@/app/recipes/components/Recipeform";
-import { useGetAllRecipesDB } from "@/lib/db/recipes";
 import { Day, Meal, MealType, PlannedMeal, WeekPlan } from "@/types";
 import { DayMealSelector } from "./components/DayMealSelector";
+import { useGetAllMealsDB } from "@/lib/db/meals/use-get-all-meals-db";
 
 export const days: Day[] = [
   "Monday",
@@ -35,7 +35,7 @@ export default function Planner() {
   const [plan, setPlan] = useState<WeekPlan>(DefaultWeekPlan);
   const [defaultServings, setDefaultServings] = useState<number>(1); 
 
-    const meals:Meal[] | null = useGetAllRecipesDB()
+    const meals:Meal[] | null = useGetAllMealsDB()
 
   function selectMeal(
     day: Day,

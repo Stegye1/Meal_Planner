@@ -2,8 +2,8 @@
 
 import { useState, useMemo, useEffect } from "react";
 
-import { useGetAllIngredientsDB } from "@/lib/db/ingredients";
 import { MealType, WeekPlan } from "@/types";
+import { useGetAllIngredientsDB } from "@/lib/db/ingredients/use-get-all-ingredients-db";
 
 type Props = {
   plan: WeekPlan;
@@ -119,10 +119,6 @@ export function ShoppingList({ plan }: Props) {
     </section>
   );
 }
-
-
-
-
 
 /*
 "use client";

@@ -4,17 +4,15 @@ import { useParams, useRouter } from "next/navigation";
 
 import "@/app/recipes/Recipes.css";
 
-import {
-  useAddRecipeDB,
-  useGetImageUrlDB,
-  useGetRecipeDB,
-  useUpdateRecipeDB,
-  useUploadImageDB,
-} from "../../../lib/db/recipes"; // hook pro uložení receptu
 import { IngredientAmount, Meal, MealType, Preparation } from "@/types";
 import { Id } from "@/convex/_generated/dataModel";
-import { useGetAllIngredientsDB } from "@/lib/db/ingredients";
 import { useState } from "react";
+import { useGetAllIngredientsDB } from "@/lib/db/ingredients/use-get-all-ingredients-db";
+import { useUploadImageDB } from "@/lib/db/images/use-upload-image-db";
+import { useUpdateMealDB } from "@/lib/db/meals/use-update-meal-db";
+import { useAddMealDB } from "@/lib/db/meals/use-add-meal-db";
+import { useGetImageUrlDB } from "@/lib/db/images/use-get-image-url-db";
+import { useGetMealDB } from "@/lib/db/meals/use-get-meal-db";
 
 export const mealTypes: { label: string; value: MealType }[] = [
   { label: "Snídaně", value: "breakfast" },
@@ -26,8 +24,8 @@ export default function RecipeForm() {
   const router = useRouter();
 
   const { uploadImage } = useUploadImageDB();
-  const { addRecipe } = useAddRecipeDB();
-  const { updateRecipe } = useUpdateRecipeDB();
+  const { addMeal } = useAddMealDB();
+  const { updateMeal } = useUpdateMealDB();
 
   const params = useParams();
   const id = params.id as Id<"meals"> | null;
@@ -35,7 +33,7 @@ export default function RecipeForm() {
   // pokud id není nebo je "ingredient-form", bereme to jako NEW
   // const isNew = !id;
 
-  const recipe: Meal | null = useGetRecipeDB(id);
+  const recipe: Meal | null = useGetMealDB(id);
 
   // Stav formuláře
   const [name, setName] = useState(recipe ? recipe.name : "");
@@ -165,33 +163,6 @@ export default function RecipeForm() {
     }
   };
 
-  // const handleConfirm = async () => {
-  //   if (!nutrientsPerServing) {
-  //     alert("Nejdříve spočítejte nutriční hodnoty.");
-  //     return;
-  //   }
-
-  //   try {
-  //     await addRecipe({
-  //       name,
-  //       types,
-  //       servings,
-  //       picture: picture || undefined,
-  //       ingredients: selectedIngredients,
-  //       nutrients: nutrientsPerServing,
-  //       preparation: {
-  //         firstStep: prepSteps.firstStep || "",
-  //         secondStep: prepSteps.secondStep,
-  //         thirdStep: prepSteps.thirdStep,
-  //         fourthStep: prepSteps.fourthStep,
-  //       },
-  //     });
-  //     router.push("/recipes");
-  //   } catch (error) {
-  //     alert("Chyba při ukládání receptu");
-  //     console.error(error);
-  //   }
-  // };
 
   const toPreparationObject = (steps: string[]): Preparation => {
     return {
@@ -236,9 +207,9 @@ export default function RecipeForm() {
 
     try {
       if (!id) {
-        await addRecipe(payload);
+        await addMeal(payload);
       } else {
-        await updateRecipe({ _id: id as Id<"meals">, ...payload });
+        await updateMeal({ _id: id as Id<"meals">, ...payload });
       }
 
       router.push("/recipes");
@@ -248,46 +219,7 @@ export default function RecipeForm() {
     }
   };
 
-  /*
-  // Odeslání formuláře
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Základní validace (například alespoň 1 ingredience)
-    if (
-      !name.trim() ||
-      types.length === 0 ||
-      selectedIngredients.length === 0
-    ) {
-      alert("Vyplňte všechny povinné údaje a přidejte ingredience");
-      return;
-    }
-
-    try {
-      await addRecipe({
-        name,
-        types,
-        servings,
-        picture: picture || undefined,
-        ingredients: selectedIngredients,
-        nutrients: nutrientsPerServing,
-        preparation: {
-          firstStep: prepSteps.firstStep || "",
-          secondStep: prepSteps.secondStep,
-          thirdStep: prepSteps.thirdStep,
-          fourthStep: prepSteps.fourthStep,
-        },
-      });
-      router.push("/recipes");
-    } catch (error) {
-      alert("Chyba při ukládání receptu");
-      console.error(error);
-    }
-  };
-*/
-  // Výpis dat pro debug
-  // console.log("Nutriční hodnoty na porci:", nutrientsPerServing);
-
+  
   return (
     <form className="app-form" onSubmit={handleSubmit}>
       {/* Název receptu */}
@@ -453,3 +385,4 @@ export default function RecipeForm() {
     </form>
   );
 }
+

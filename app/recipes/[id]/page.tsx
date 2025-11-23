@@ -6,10 +6,13 @@ import { useParams } from "next/navigation";
 import "../Recipes.css";
 import { Ingredient, Meal } from "@/types";
 
-import { useGetAllIngredientsDB } from "@/lib/db/ingredients";
-import { useGetRecipeDB } from "@/lib/db/recipes";
+
+
 import { Id } from "@/convex/_generated/dataModel";
 import Link from "next/link";
+import { useGetMealDB } from "@/lib/db/meals/use-get-meal-db";
+import { useGetAllIngredientsDB } from "@/lib/db/ingredients/use-get-all-ingredients-db";
+import { useGetImageUrlDB } from "@/lib/db/images/use-get-image-url-db";
 
 
 export default function RecipeDetail() {
@@ -18,55 +21,59 @@ export default function RecipeDetail() {
 
 
 
-  const recipe: Meal | null = useGetRecipeDB(id)
+  const meal: Meal | null = useGetMealDB(id)
   const ingredients: Ingredient[] | null = useGetAllIngredientsDB()
 
-   const recipeIngredients = recipe?.ingredients.map((ing) => {
+    const storageId = meal?.picture as Id<"_storage">
+  const imageUrl = useGetImageUrlDB(storageId);
+  
+
+   const mealIngredients = meal?.ingredients.map((ing) => {
     const ingredient = ingredients?.find((i) => i._id === ing.ingredientId);
     return `${ingredient?.name} – ${ing.amount} ${ingredient?.unit}`;
   });
 
 
 
-  if (!recipe || !recipeIngredients) {
+  if (!meal || !mealIngredients) {
     return <p>Omlouváme se, nepodařilo se načíst recept.</p>;
   }
 
   return (
-    <main className="recipe-detail">
-      { (recipe && recipeIngredients) ? (
+    <main className="meal-detail">
+      { (meal && mealIngredients) ? (
         <>
-      <h2>{recipe.name}</h2>
+      <h2>{meal.name}</h2>
      
-      {recipe.pictureUrl ? (
+      {imageUrl ? (
         <img
-          src={recipe.pictureUrl}
-          alt={recipe.name}
-          className="recipe-img-detail"
+          src={imageUrl}
+          alt={meal.name}
+          className="meal-img-detail"
         />
       ) : (
-        <div className="recipe-img-empty">Chybí obrázek</div>
+        <div className="meal-img-empty">Chybí obrázek</div>
       )}
 
       <p>
-        <strong>Typ jídla:</strong> {recipe.types.join(", ")}
+        <strong>Typ jídla:</strong> {meal.types.join(", ")}
       </p>
       <p>
-        <strong>Porce:</strong> {recipe.servings}
+        <strong>Porce:</strong> {meal.servings}
       </p>
 
       <h3>Ingredience:</h3>
       <ul>
-        {recipeIngredients.map((item, i) => (
+        {mealIngredients.map((item, i) => (
           <li key={i}>{item}</li>
         ))}
       </ul>
 
       <h3>Postup:</h3>
-      <p>{recipe.preparation.firstStep}</p>
-      <p>{recipe.preparation.secondStep}</p>
-      <p>{recipe.preparation.thirdStep}</p>
-      <p>{recipe.preparation.fourthStep}</p>
+      <p>{meal.preparation.firstStep}</p>
+      <p>{meal.preparation.secondStep}</p>
+      <p>{meal.preparation.thirdStep}</p>
+      <p>{meal.preparation.fourthStep}</p>
       </>) : <p>Omlouváme se, nepodařilo se načíst recept.</p> }
 
       

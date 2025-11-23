@@ -1,7 +1,8 @@
 
 
 import { Id } from "@/convex/_generated/dataModel";
-import { useGetImageUrlDB } from "@/lib/db/recipes";
+import { useGetImageUrlDB } from "@/lib/db/images/use-get-image-url-db";
+
 import { Meal } from "@/types";
 import Link from "next/link";
 

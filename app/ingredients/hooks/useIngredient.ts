@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useIngredientId } from "./useIntredientId";
 import { useIngredientNavigation } from "./useIngredientNavigation";
-import { useAddIngredientDB, useGetIngredientDB, useUpdateIngredientDB } from "@/lib/db/ingredients";
 import { useIngredientFormState } from "./useIngredientFormState";
+import { useGetIngredientDB } from "@/lib/db/ingredients/use-get-ingredient-db";
+import { useUpdateIngredientDB } from "@/lib/db/ingredients/use-update-ingredient-db";
+import { useAddIngredientDB } from "@/lib/db/ingredients/use-add-ingredient-db";
 
 
 export function useIngredient() {

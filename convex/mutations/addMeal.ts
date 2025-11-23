@@ -1,7 +1,7 @@
 import { mutation } from "../_generated/server";
 import { v } from "convex/values";
 
-export const addRecipe = mutation({
+export const addMeal = mutation({
   args: {
     name: v.string(),
     types: v.array(

@@ -1,4 +1,3 @@
-// convex/queries/getImageUrl.ts
 import { query } from "../_generated/server";
 import { v } from "convex/values";
 
@@ -11,3 +10,4 @@ export const getImageUrl = query({
     return url; // vrací přístupnou URL nebo null
   },
 });
+
