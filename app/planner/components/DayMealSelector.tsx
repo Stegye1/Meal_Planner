@@ -1,7 +1,9 @@
 
+import { mealTypes } from "@/app/recipes/components/Recipeform";
 import { Day, MealType, WeekPlan } from "@/types";
 import { MealSelect } from "./MealSelect";
-import { mealTypes } from "./Recipeform";
+
+
 
 
 type Props = {

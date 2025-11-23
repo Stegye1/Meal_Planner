@@ -1,6 +1,6 @@
 "use client";
 
-import { IngredientForm } from "../../../components/IngredientForm";
+import { IngredientForm } from "../components/IngredientForm";
 
 export default function NewIngredientPage() {
   return (
