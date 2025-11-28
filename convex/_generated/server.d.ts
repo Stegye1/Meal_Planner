@@ -7,26 +7,22 @@
  * To regenerate, run `npx convex dev`.
  * @module
  */
-
 import {
   ActionBuilder,
   AnyComponents,
+  FunctionReference,
+  GenericActionCtx,
+  GenericDatabaseReader,
+  GenericDatabaseWriter,
+  GenericMutationCtx,
+  GenericQueryCtx,
   HttpActionBuilder,
   MutationBuilder,
   QueryBuilder,
-  GenericActionCtx,
-  GenericMutationCtx,
-  GenericQueryCtx,
-  GenericDatabaseReader,
-  GenericDatabaseWriter,
-  FunctionReference,
 } from "convex/server";
 import type { DataModel } from "./dataModel.js";
 
-type GenericCtx =
-  | GenericActionCtx<DataModel>
-  | GenericMutationCtx<DataModel>
-  | GenericQueryCtx<DataModel>;
+type GenericCtx = GenericActionCtx<DataModel> | GenericMutationCtx<DataModel> | GenericQueryCtx<DataModel>;
 
 /**
  * Define a query in this Convex app's public API.

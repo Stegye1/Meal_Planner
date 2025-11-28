@@ -7,16 +7,8 @@ type Props = {
 export function FormActions({ isNew, isLoading }: Props) {
   return (
     <div className="form-actions mt-6">
-      <button
-        type="submit"
-        disabled={isLoading}
-        className="action-button"
-      >
-        {isLoading
-          ? "Ukládám..."
-          : isNew
-          ? "Přidat novou ingredienci"
-          : "Uložit upravenou ingredienci"}
+      <button type="submit" disabled={isLoading} className="action-button">
+        {isLoading ? "Ukládám..." : isNew ? "Přidat novou ingredienci" : "Uložit upravenou ingredienci"}
       </button>
     </div>
   );

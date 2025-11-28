@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
 interface HeaderProps {
   headerAction?: React.ReactNode;
@@ -37,15 +37,32 @@ export function Header({ headerAction: headerActionProp }: HeaderProps) {
 
   let headerAction;
   if (pathname === "/planner") {
-    headerAction = <button className="nav-action" onClick={() => window.print()}>Vytisknout</button>;
+    headerAction = (
+      <button className="nav-action" onClick={() => window.print()}>
+        Vytisknout
+      </button>
+    );
   } else if (pathname === "/welcome") {
     headerAction = user ? (
-      <button className="nav-action" onClick={handleLogout}>Odhlásit se</button>
+      <button className="nav-action" onClick={handleLogout}>
+        Odhlásit se
+      </button>
     ) : (
-      <button className="nav-action" onClick={() => setShowLogin(true)}>Registrace/Přihlášení</button>
+      <button className="nav-action" onClick={() => setShowLogin(true)}>
+        Registrace/Přihlášení
+      </button>
     );
   } else if (pathname === "/recipes") {
-    headerAction = <div className="flex"><Link className="nav-action" href="/recipes/new-recipe/">Přidat recept</Link><Link className="nav-action" href="/ingredients/new-ingredient/">Přidat ingredienci</Link></div>
+    headerAction = (
+      <div className="flex">
+        <Link className="nav-action" href="/recipes/new-recipe/">
+          Přidat recept
+        </Link>
+        <Link className="nav-action" href="/ingredients/new-ingredient/">
+          Přidat ingredienci
+        </Link>
+      </div>
+    );
   }
 
   if (!headerAction && headerActionProp) {

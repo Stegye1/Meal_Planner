@@ -1,5 +1,3 @@
-
-
 import { Id } from "@/convex/_generated/dataModel";
 import { useGetAllMealsDB } from "@/lib/db/meals/use-get-all-meals-db";
 import type { Day, Meal, MealType } from "@/types";
@@ -9,23 +7,11 @@ type Props = {
   mealType: MealType;
   label: string;
   selectedMeal?: Meal;
-  selectMeal: (
-    day: Day,
-    type: MealType,
-    mealId: Id<"meals"> | undefined,
-    servings: number
-  ) => void;
+  selectMeal: (day: Day, type: MealType, mealId: Id<"meals"> | undefined, servings: number) => void;
   servings: number;
 };
 
-export function MealSelect({
-  day,
-  mealType,
-  label,
-  selectedMeal,
-  selectMeal,
-  servings,
-}: Props) {
+export function MealSelect({ day, mealType, label, selectedMeal, selectMeal, servings }: Props) {
   const meals: Omit<Meal, "picture">[] | null = useGetAllMealsDB();
   const options = meals ? meals.filter((m) => m.types.includes(mealType)) : [];
 
@@ -42,11 +28,7 @@ export function MealSelect({
   return (
     <div className="day-meal-selector">
       <label>{label}: </label>
-      <select
-        className="meal-window"
-        value={selectedMeal?._id ?? ""}
-        onChange={onMealChange}
-      >
+      <select className="meal-window" value={selectedMeal?._id ?? ""} onChange={onMealChange}>
         <option value="">-- vyberte jídlo --</option>
         {options.map((meal) => (
           <option key={meal._id} value={meal._id}>
@@ -55,13 +37,7 @@ export function MealSelect({
         ))}
       </select>
       {selectedMeal && (
-        <input
-          className="portions-window"
-          type="number"
-          min={1}
-          value={servings}
-          onChange={onServingsChange}
-        />
+        <input className="portions-window" type="number" min={1} value={servings} onChange={onServingsChange} />
       )}
     </div>
   );

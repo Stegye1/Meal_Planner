@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
-
-import { MealType, WeekPlan } from "@/types";
+import { useEffect, useMemo, useState } from "react";
 import { useGetAllIngredientsDB } from "@/lib/db/ingredients/use-get-all-ingredients-db";
+import { MealType, WeekPlan } from "@/types";
 
 type Props = {
   plan: WeekPlan;
@@ -36,10 +35,7 @@ export function ShoppingList({ plan }: Props) {
           const factor = servings / meal.servings;
 
           meal.ingredients.forEach(({ ingredientId, amount }) => {
-            totals.set(
-              ingredientId,
-              (totals.get(ingredientId) || 0) + amount * factor
-            );
+            totals.set(ingredientId, (totals.get(ingredientId) || 0) + amount * factor);
 
             if (!mealsCountMap.has(ingredientId)) {
               mealsCountMap.set(ingredientId, new Map());
@@ -51,17 +47,15 @@ export function ShoppingList({ plan }: Props) {
       });
     });
 
-    const allIngredientsArray = Array.from(totals.entries()).map(
-      ([id, amount]) => {
-        const ingredient = ingredientMap.get(id);
-        return {
-          id,
-          name: ingredient?.name || "Neznámá ingredience",
-          unit: ingredient?.unit || "",
-          amount,
-        };
-      }
-    );
+    const allIngredientsArray = Array.from(totals.entries()).map(([id, amount]) => {
+      const ingredient = ingredientMap.get(id);
+      return {
+        id,
+        name: ingredient?.name || "Neznámá ingredience",
+        unit: ingredient?.unit || "",
+        amount,
+      };
+    });
 
     return {
       allIngredients: allIngredientsArray,
@@ -93,21 +87,14 @@ export function ShoppingList({ plan }: Props) {
           {shoppingList.map(({ id, name, amount, unit }) => (
             <li key={id} className="list-item" style={{ position: "relative" }}>
               <span
-                title={`Používá se v: ${Array.from(
-                  ingredientToMealsCountMap.get(id) || []
-                )
-                  .map(([mealName, count]) =>
-                    count > 1 ? `${count} × ${mealName}` : mealName
-                  )
+                title={`Používá se v: ${Array.from(ingredientToMealsCountMap.get(id) || [])
+                  .map(([mealName, count]) => (count > 1 ? `${count} × ${mealName}` : mealName))
                   .join(", ")}`}
               >
                 {amount} {unit} {name}
               </span>
 
-              <button
-                onClick={() => handleRemove(id)}
-                aria-label={`Zrušit ${name}`}
-              >
+              <button onClick={() => handleRemove(id)} aria-label={`Zrušit ${name}`}>
                 Zrušit
               </button>
             </li>

@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { useIngredientId } from "./useIntredientId";
-import { useIngredientNavigation } from "./useIngredientNavigation";
-import { useIngredientFormState } from "./useIngredientFormState";
+import { useAddIngredientDB } from "@/lib/db/ingredients/use-add-ingredient-db";
 import { useGetIngredientDB } from "@/lib/db/ingredients/use-get-ingredient-db";
 import { useUpdateIngredientDB } from "@/lib/db/ingredients/use-update-ingredient-db";
-import { useAddIngredientDB } from "@/lib/db/ingredients/use-add-ingredient-db";
-
+import { useIngredientFormState } from "./useIngredientFormState";
+import { useIngredientNavigation } from "./useIngredientNavigation";
+import { useIngredientId } from "./useIntredientId";
 
 export function useIngredient() {
   const { id, isNew } = useIngredientId();
@@ -30,11 +29,11 @@ export function useIngredient() {
         goToDetail(newIngredientId);
       } else {
         await updateIngredient({
-            _id: id!, 
+          _id: id!,
           name: state.name,
           unit: state.unit,
           nutrients: state.nutrients,
-       } );
+        });
         goToDetail(id!);
       }
     } catch (err) {
@@ -46,7 +45,7 @@ export function useIngredient() {
   };
 
   return {
-    ...state,       
+    ...state,
     isNew,
     isSubmitting,
     handleSubmit,

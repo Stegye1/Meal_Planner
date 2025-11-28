@@ -3,7 +3,6 @@
 // import { useMutation, useQuery } from "convex/react";
 // import { Id } from "@/convex/_generated/dataModel";
 
-
 /*---------------vložení nové ingredience------------*/
 
 // export function useAddIngredientDB() {
@@ -25,7 +24,7 @@
 
 // export function useUpdateIngredientDB()  {
 //   const updateIngredient = useMutation(api.mutations.updateIngredient.updateIngredient);
- 
+
 //   return {
 //     updateIngredient: async (data: {
 //       _id: Id<"ingredients">;
@@ -34,11 +33,11 @@
 //       nutrients: [number, number, number, number];
 //     }) => {const id = await updateIngredient(data);
 //       return id; } // vrací ID upravené ingredience
-//   };   
+//   };
 // }
 
 /*---------------získání všech ingrediencí z db--------------*/
- 
+
 // export function useGetAllIngredientsDB() {
 //   const ingredients = useQuery(api.queries.getAllIngredients.getAllIngredients, {})
 // if (!ingredients) return null;

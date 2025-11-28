@@ -57,7 +57,9 @@ main {
   color: white;
   font-weight: 600;
   text-decoration: none;
-  transition: transform 0.3s ease, color 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    color 0.3s ease;
 }
 
 .nav-links a:hover {
@@ -82,7 +84,9 @@ main {
   text-decoration: none;
   font-weight: 600 !important;
   display: inline-block;
-  transition: transform 0.5s ease, color 0.4s ease;
+  transition:
+    transform 0.5s ease,
+    color 0.4s ease;
   font-size: 0.9rem;
   line-height: 1.4;
   cursor: pointer;
@@ -131,13 +135,12 @@ main {
   text-align: left;
 }
 
-.meal-window { 
+.meal-window {
   height: 3 rem;
   background-color: rgb(253, 253, 218);
 }
 
-
-.portions-window { 
+.portions-window {
   height: 2 rem;
   background-color: rgb(253, 253, 218);
   width: 28px;
@@ -179,7 +182,8 @@ main {
   padding-left: 0;
 }
 
-.list-item button, span {
+.list-item button,
+span {
   cursor: pointer;
 }
 

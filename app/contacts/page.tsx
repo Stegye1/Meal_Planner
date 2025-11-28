@@ -1,8 +1,7 @@
 export default function Contacts() {
- 
- return (
+  return (
     <main className="main-content">
-        <h1>Kontakty</h1>
-     </main>
+      <h1>Kontakty</h1>
+    </main>
   );
 }

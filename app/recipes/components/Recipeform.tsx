@@ -1,18 +1,16 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-
-import "@/app/recipes/Recipes.css";
-
-import { IngredientAmount, Meal, MealType, Preparation } from "@/types";
-import { Id } from "@/convex/_generated/dataModel";
 import { useState } from "react";
-import { useGetAllIngredientsDB } from "@/lib/db/ingredients/use-get-all-ingredients-db";
-import { useUploadImageDB } from "@/lib/db/images/use-upload-image-db";
-import { useUpdateMealDB } from "@/lib/db/meals/use-update-meal-db";
-import { useAddMealDB } from "@/lib/db/meals/use-add-meal-db";
+import "@/app/recipes/Recipes.css";
+import { Id } from "@/convex/_generated/dataModel";
 import { useGetImageUrlDB } from "@/lib/db/images/use-get-image-url-db";
+import { useUploadImageDB } from "@/lib/db/images/use-upload-image-db";
+import { useGetAllIngredientsDB } from "@/lib/db/ingredients/use-get-all-ingredients-db";
+import { useAddMealDB } from "@/lib/db/meals/use-add-meal-db";
 import { useGetMealDB } from "@/lib/db/meals/use-get-meal-db";
+import { useUpdateMealDB } from "@/lib/db/meals/use-update-meal-db";
+import { IngredientAmount, Meal, MealType, Preparation } from "@/types";
 
 export const mealTypes: { label: string; value: MealType }[] = [
   { label: "Snídaně", value: "breakfast" },
@@ -40,11 +38,7 @@ export default function RecipeForm() {
   const [types, setTypes] = useState<MealType[]>(recipe ? recipe.types : []);
   const [servings, setServings] = useState(recipe ? recipe.servings : 1);
   const [picture, setPicture] = useState<Id<"_storage"> | undefined>(
-    recipe
-      ? recipe.picture
-        ? (recipe.picture as Id<"_storage">)
-        : undefined
-      : undefined
+    recipe ? (recipe.picture ? (recipe.picture as Id<"_storage">) : undefined) : undefined,
   ); // Získáme URL přímo z hooku – vždy aktuální!
   const pictureUrl = useGetImageUrlDB(picture as Id<"_storage">); // pokud je picture storageId, získáme URL;
   const [prepStepsArray, setPrepStepsArray] = useState<string[]>(
@@ -55,37 +49,26 @@ export default function RecipeForm() {
           recipe.preparation.thirdStep || "",
           recipe.preparation.fourthStep || "",
         ].filter(Boolean) // odstraní prázdné trailing kroky
-      : [""]
+      : [""],
   );
   const [selectedIngredients, setSelectedIngredients] = useState<
     IngredientAmount[] // pořešit ingredience
   >(recipe ? recipe.ingredients : []);
 
   // Nutriční hodnoty spočítané na 1 porci: [kcal, tuky, sacharidy, bílkoviny]
-  const [nutrientsPerServing, setNutrientsPerServing] = useState<
-    [number, number, number, number]
-  >([0, 0, 0, 0]);
+  const [nutrientsPerServing, setNutrientsPerServing] = useState<[number, number, number, number]>([0, 0, 0, 0]);
 
   // Načtení všech ingrediencí z Convexu
   const allIngredients = useGetAllIngredientsDB();
 
   // Přidání ingredience do seznamu
   const addIngredient = () => {
-    setSelectedIngredients((prev) => [
-      ...prev,
-      { ingredientId: "" as Id<"ingredients">, amount: 0 },
-    ]);
+    setSelectedIngredients((prev) => [...prev, { ingredientId: "" as Id<"ingredients">, amount: 0 }]);
   };
 
   // Aktualizace ingredience nebo množství
-  const updateIngredient = (
-    index: number,
-    field: "ingredientId" | "amount",
-    value: string | number
-  ) => {
-    setSelectedIngredients((prev) =>
-      prev.map((ing, i) => (i === index ? { ...ing, [field]: value } : ing))
-    );
+  const updateIngredient = (index: number, field: "ingredientId" | "amount", value: string | number) => {
+    setSelectedIngredients((prev) => prev.map((ing, i) => (i === index ? { ...ing, [field]: value } : ing)));
   };
 
   // Odebrání ingredience ze seznamu
@@ -95,9 +78,7 @@ export default function RecipeForm() {
 
   // Přepínání typu jídla
   const toggleType = (type: MealType) => {
-    setTypes((prev) =>
-      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
-    );
+    setTypes((prev) => (prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]));
   };
 
   // Přidání kroku přípravy
@@ -109,9 +90,7 @@ export default function RecipeForm() {
 
   // Aktualizace kroku přípravy
   const updatePrepStep = (index: number, value: string) => {
-    setPrepStepsArray((prev) =>
-      prev.map((step, i) => (i === index ? value : step))
-    );
+    setPrepStepsArray((prev) => prev.map((step, i) => (i === index ? value : step)));
   };
 
   const calculateNutrients = () => {
@@ -119,28 +98,17 @@ export default function RecipeForm() {
 
     const totalNutrients = selectedIngredients.reduce(
       (totals, ing) => {
-        const ingredient = allIngredients.find(
-          (i) => i._id === ing.ingredientId
-        );
+        const ingredient = allIngredients.find((i) => i._id === ing.ingredientId);
         if (!ingredient) return totals;
         const amount = ing.amount || 0;
         const nutrients = ingredient.nutrients || [0, 0, 0, 0];
-        return totals.map(
-          (total, idx) => total + (amount * nutrients[idx]) / 100
-        ) as [number, number, number, number];
+        return totals.map((total, idx) => total + (amount * nutrients[idx]) / 100) as [number, number, number, number];
       },
-      [0, 0, 0, 0] as [number, number, number, number]
+      [0, 0, 0, 0] as [number, number, number, number],
     );
 
     if (servings > 0) {
-      setNutrientsPerServing(
-        totalNutrients.map((n) => n / servings) as [
-          number,
-          number,
-          number,
-          number,
-        ]
-      );
+      setNutrientsPerServing(totalNutrients.map((n) => n / servings) as [number, number, number, number]);
     } else {
       setNutrientsPerServing([0, 0, 0, 0]);
     }
@@ -163,7 +131,6 @@ export default function RecipeForm() {
     }
   };
 
-
   const toPreparationObject = (steps: string[]): Preparation => {
     return {
       firstStep: steps[0] ?? "",
@@ -176,19 +143,12 @@ export default function RecipeForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (
-      !name.trim() ||
-      types.length === 0 ||
-      selectedIngredients.length === 0
-    ) {
+    if (!name.trim() || types.length === 0 || selectedIngredients.length === 0) {
       alert("Vyplňte všechny povinné údaje a přidejte ingredience");
       return;
     }
 
-    if (
-      selectedIngredients.length > 0 &&
-      nutrientsPerServing.every((n) => n === 0)
-    ) {
+    if (selectedIngredients.length > 0 && nutrientsPerServing.every((n) => n === 0)) {
       alert("Nejdříve spočítejte nutriční hodnoty.");
       return;
     }
@@ -219,7 +179,6 @@ export default function RecipeForm() {
     }
   };
 
-  
   return (
     <form className="app-form" onSubmit={handleSubmit}>
       {/* Název receptu */}
@@ -241,12 +200,7 @@ export default function RecipeForm() {
         <div className="meal-types-items">
           {mealTypes.map(({ value, label }) => (
             <label key={value}>
-              <input
-                type="checkbox"
-                checked={types.includes(value)}
-                onChange={() => toggleType(value)}
-              />{" "}
-              {label}
+              <input type="checkbox" checked={types.includes(value)} onChange={() => toggleType(value)} /> {label}
             </label>
           ))}
         </div>
@@ -267,13 +221,7 @@ export default function RecipeForm() {
       </div>
 
       {/* Obrázek */}
-      {pictureUrl && (
-        <img
-          src={pictureUrl}
-          alt="Náhled obrázku"
-          style={{ maxWidth: "200px", marginTop: 10 }}
-        />
-      )}
+      {pictureUrl && <img src={pictureUrl} alt="Náhled obrázku" style={{ maxWidth: "200px", marginTop: 10 }} />}
 
       <div className="form-group">
         <label htmlFor="image-url">URL obrázku (volitelné)</label>
@@ -294,9 +242,7 @@ export default function RecipeForm() {
           <div key={i} className="ingredient-row">
             <select
               value={ing.ingredientId}
-              onChange={(e) =>
-                updateIngredient(i, "ingredientId", e.target.value)
-              }
+              onChange={(e) => updateIngredient(i, "ingredientId", e.target.value)}
               className="app-input"
               required
             >
@@ -312,18 +258,12 @@ export default function RecipeForm() {
               min={0}
               step={0.1}
               value={ing.amount}
-              onChange={(e) =>
-                updateIngredient(i, "amount", Number(e.target.value))
-              }
+              onChange={(e) => updateIngredient(i, "amount", Number(e.target.value))}
               placeholder="množství"
               className="app-input small"
               required
             />
-            <button
-              type="button"
-              onClick={() => removeIngredient(i)}
-              className="button remove-btn"
-            >
+            <button type="button" onClick={() => removeIngredient(i)} className="button remove-btn">
               ×
             </button>
           </div>
@@ -373,11 +313,7 @@ export default function RecipeForm() {
           <p>Sacharidy na porci: {nutrientsPerServing[2].toFixed(1)} g</p>
           <p>Bílkoviny na porci: {nutrientsPerServing[3].toFixed(1)} g</p>
 
-          <button
-            type="button"
-            onClick={handleSubmit}
-            className="action-button"
-          >
+          <button type="button" onClick={handleSubmit} className="action-button">
             Uložit recept
           </button>
         </div>
@@ -385,4 +321,3 @@ export default function RecipeForm() {
     </form>
   );
 }
-

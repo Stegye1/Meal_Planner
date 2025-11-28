@@ -1,15 +1,9 @@
 // typy pro frontend
-
 import { Id } from "@/convex/_generated/dataModel";
 
 export type MealType = "breakfast" | "lunch" | "dinner";
 
-export type Nutrients = [       
-  kcal: number,
-  fat: number,
-  carbohydrates: number,
-  protein: number,
-];
+export type Nutrients = [kcal: number, fat: number, carbohydrates: number, protein: number];
 
 export type Ingredient = {
   _id: Id<"ingredients">;
@@ -36,8 +30,8 @@ export type Meal = {
   _id: Id<"meals">;
   name: string;
   types: MealType[];
-  picture?: Id<"_storage">;  // storageId obrázku!
-//  pictureUrl?: string | null;
+  picture?: Id<"_storage">; // storageId obrázku!
+  //  pictureUrl?: string | null;
   ingredients: IngredientAmount[];
   nutrients: Nutrients; // na 1 porci
   preparation: Preparation;
@@ -53,13 +47,6 @@ export type PlannedMeal = {
 
 type DayPlan = Partial<Record<MealType, PlannedMeal>>;
 
-export type Day =
-  | "Monday"
-  | "Tuesday"
-  | "Wednesday"
-  | "Thursday"
-  | "Friday"
-  | "Saturday"
-  | "Sunday";
+export type Day = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
 
 export type WeekPlan = Record<Day, DayPlan>;

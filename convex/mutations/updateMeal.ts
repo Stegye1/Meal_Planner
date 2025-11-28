@@ -1,9 +1,9 @@
-import { mutation } from "../_generated/server";
 import { v } from "convex/values";
+import { mutation } from "../_generated/server";
 
 export const updateMeal = mutation({
   args: {
-    _id: v.id("meals"),  
+    _id: v.id("meals"),
     name: v.string(),
     types: v.array(v.union(v.literal("breakfast"), v.literal("lunch"), v.literal("dinner"))),
     servings: v.number(),
@@ -14,10 +14,12 @@ export const updateMeal = mutation({
       thirdStep: v.optional(v.string()),
       fourthStep: v.optional(v.string()),
     }),
-    ingredients: v.array(v.object({
-      ingredientId: v.id("ingredients"),
-      amount: v.number()
-    })),
+    ingredients: v.array(
+      v.object({
+        ingredientId: v.id("ingredients"),
+        amount: v.number(),
+      }),
+    ),
     nutrients: v.array(v.number()),
   },
 
@@ -29,8 +31,8 @@ export const updateMeal = mutation({
       picture,
       preparation,
       ingredients,
-      nutrients
+      nutrients,
     });
     return _id;
-  }
+  },
 });

@@ -1,11 +1,9 @@
+import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
-import { useMutation } from "convex/react";
 
 export function useUploadImageDB() {
-  const generateUploadUrl = useMutation(
-    api.mutations.generateUploadUrl.generateUploadUrl
-  );
+  const generateUploadUrl = useMutation(api.mutations.generateUploadUrl.generateUploadUrl);
 
   const uploadImage = async (file: File): Promise<Id<"_storage">> => {
     // 1. Získáme upload URL

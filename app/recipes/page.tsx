@@ -1,16 +1,12 @@
 "use client";
 
-
-import { RecipeCard } from "./components/RecipeCard";
-
-//import { meals } from "../../mock-data";
-import "./Recipes.css";
-
 import Link from "next/link";
-import { Ingredient, Meal } from "@/types";
 import { useGetAllIngredientsDB } from "@/lib/db/ingredients/use-get-all-ingredients-db";
 import { useGetAllMealsDB } from "@/lib/db/meals/use-get-all-meals-db";
-
+import { Ingredient, Meal } from "@/types";
+//import { meals } from "../../mock-data";
+import "./Recipes.css";
+import { RecipeCard } from "./components/RecipeCard";
 
 export default function Recipes() {
   const recipes: Meal[] | null = useGetAllMealsDB();
@@ -20,8 +16,7 @@ export default function Recipes() {
     <main className="recipes-page">
       <h1>Recepty</h1>
       <p className="recipes-intro">
-        Zde najdete všechny recepty z databáze. Později přidáme vyhledávání a
-        filtrování podle typu jídla.
+        Zde najdete všechny recepty z databáze. Později přidáme vyhledávání a filtrování podle typu jídla.
       </p>
       {recipes ? (
         <div className="recipes-grid">

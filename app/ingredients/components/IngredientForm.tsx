@@ -5,17 +5,7 @@ import { IngredientUnitSelect } from "./IngredientUnitSelect";
 import { NutrientsFieldset } from "./NutrientsFieldSet";
 
 export function IngredientForm() {
-  const {
-    isNew,
-    name,
-    setName,
-    unit,
-    setUnit,
-    nutrients,
-    setNutrients,
-    isSubmitting,
-    handleSubmit,
-  } = useIngredient();
+  const { isNew, name, setName, unit, setUnit, nutrients, setNutrients, isSubmitting, handleSubmit } = useIngredient();
 
   return (
     <form

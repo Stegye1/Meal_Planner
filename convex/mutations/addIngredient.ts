@@ -1,5 +1,5 @@
-import { mutation } from "../_generated/server";
 import { v } from "convex/values";
+import { mutation } from "../_generated/server";
 
 export const addIngredient = mutation({
   args: {
@@ -11,8 +11,8 @@ export const addIngredient = mutation({
     return await ctx.db.insert("ingredients", {
       name,
       unit,
-      nutrients
-    });   
-  }
+      nutrients,
+    });
+  },
 });
 // insert automaticky vrací id nové položky, není potřeba to tam psát

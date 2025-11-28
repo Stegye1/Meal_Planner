@@ -1,6 +1,6 @@
 // convex/queries/getRecipe.ts
-import { query } from "../_generated/server";
 import { v } from "convex/values";
+import { query } from "../_generated/server";
 
 export const getMeal = query({
   args: {
@@ -8,6 +8,6 @@ export const getMeal = query({
   },
   handler: async (ctx, { id }) => {
     const meal = await ctx.db.get(id);
-    return meal; 
+    return meal;
   },
 });

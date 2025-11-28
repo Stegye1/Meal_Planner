@@ -1,12 +1,11 @@
-import { query } from "../_generated/server";
 import { v } from "convex/values";
+import { query } from "../_generated/server";
 
 /*
 export const getAllIngredients = query(async (ctx) => {
   return await ctx.db.query("ingredients").collect();
 });
 */
-
 
 export const getAllIngredients = query({
   args: {
@@ -20,7 +19,7 @@ export const getAllIngredients = query({
     // Filtrování podle textu v názvu pomocí JavaScript includes
     if (search) {
       allIngredients = allIngredients.filter((ingredient) =>
-        ingredient.name.toLowerCase().includes(search.toLowerCase())
+        ingredient.name.toLowerCase().includes(search.toLowerCase()),
       );
     }
 

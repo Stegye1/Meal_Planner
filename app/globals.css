@@ -2,7 +2,7 @@
 :root {
   --background: rgba(230, 232, 89, 0.9);
   --foreground: #171717;
-  --action:  #f68537;
+  --action: #f68537;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,9 +22,7 @@ body {
   padding: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family:
-    "Raleway", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-    "Helvetica Neue", sans-serif;
+  font-family: "Raleway", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
 h1 {
@@ -170,7 +168,7 @@ select.app-input:focus {
 .button {
   background-color: rgba(0, 0, 0, 0.784);
   color: white;
-  font-size: 0,7rem;
+  font-size: 0, 7rem;
   font-weight: 400;
   padding: 0.5rem 1rem;
   border: none;
@@ -187,5 +185,5 @@ select.app-input:focus {
 }
 
 .small-button {
-  width: 3em
+  width: 3em;
 }

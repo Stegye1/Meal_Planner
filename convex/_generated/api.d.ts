@@ -7,7 +7,7 @@
  * To regenerate, run `npx convex dev`.
  * @module
  */
-
+import type { ApiFromModules, FilterApi, FunctionReference } from "convex/server";
 import type * as mutations_addIngredient from "../mutations/addIngredient.js";
 import type * as mutations_addMeal from "../mutations/addMeal.js";
 import type * as mutations_deleteImage from "../mutations/deleteImage.js";
@@ -19,12 +19,6 @@ import type * as queries_getAllMeals from "../queries/getAllMeals.js";
 import type * as queries_getImageUrl from "../queries/getImageUrl.js";
 import type * as queries_getIngredient from "../queries/getIngredient.js";
 import type * as queries_getMeal from "../queries/getMeal.js";
-
-import type {
-  ApiFromModules,
-  FilterApi,
-  FunctionReference,
-} from "convex/server";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -49,13 +43,7 @@ declare const fullApi: ApiFromModules<{
 }>;
 declare const fullApiWithMounts: typeof fullApi;
 
-export declare const api: FilterApi<
-  typeof fullApiWithMounts,
-  FunctionReference<any, "public">
->;
-export declare const internal: FilterApi<
-  typeof fullApiWithMounts,
-  FunctionReference<any, "internal">
->;
+export declare const api: FilterApi<typeof fullApiWithMounts, FunctionReference<any, "public">>;
+export declare const internal: FilterApi<typeof fullApiWithMounts, FunctionReference<any, "internal">>;
 
 export declare const components: {};

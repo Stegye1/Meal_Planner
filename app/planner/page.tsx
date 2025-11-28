@@ -1,25 +1,15 @@
 "use client";
 
 import { useState } from "react";
-
-// import { days, DefaultWeekPlan, meals, mealTypes } from "../../mock-data";
-
-
-import { ShoppingList } from "./components/ShoppingList";
 import { mealTypes } from "@/app/recipes/components/Recipeform";
+import { useGetAllMealsDB } from "@/lib/db/meals/use-get-all-meals-db";
 import { Day, Meal, MealType, PlannedMeal, WeekPlan } from "@/types";
 import { DayMealSelector } from "./components/DayMealSelector";
-import { useGetAllMealsDB } from "@/lib/db/meals/use-get-all-meals-db";
+// import { days, DefaultWeekPlan, meals, mealTypes } from "../../mock-data";
 
-export const days: Day[] = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
-];
+import { ShoppingList } from "./components/ShoppingList";
+
+export const days: Day[] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 export const DefaultWeekPlan = {
   Monday: {},
@@ -33,25 +23,18 @@ export const DefaultWeekPlan = {
 
 export default function Planner() {
   const [plan, setPlan] = useState<WeekPlan>(DefaultWeekPlan);
-  const [defaultServings, setDefaultServings] = useState<number>(1); 
+  const [defaultServings, setDefaultServings] = useState<number>(1);
 
-    const meals:Meal[] | null = useGetAllMealsDB()
+  const meals: Meal[] | null = useGetAllMealsDB();
 
-  function selectMeal(
-    day: Day,
-    type: MealType,
-    mealId: string | undefined,
-    servings: number
-  ) {
+  function selectMeal(day: Day, type: MealType, mealId: string | undefined, servings: number) {
     setPlan((prev: WeekPlan) => {
       const dayPlan = prev[day] || {};
       const prevEntry = dayPlan[type];
       const prevMealId = prevEntry?.meal?._id;
 
       const selectedMeal =
-        mealId !== undefined
-          ? meals?.find((m) => m._id === mealId && m.types.includes(type))
-          : undefined;
+        mealId !== undefined ? meals?.find((m) => m._id === mealId && m.types.includes(type)) : undefined;
 
       // logika výběru počtu porcí:
       let usedServings: number;
@@ -74,8 +57,8 @@ export default function Planner() {
           [type]: selectedMeal
             ? { meal: selectedMeal, servings: usedServings }
             : dayPlan[type]
-            ? { ...dayPlan[type], servings: usedServings }
-            : undefined,
+              ? { ...dayPlan[type], servings: usedServings }
+              : undefined,
         },
       };
     });
@@ -86,44 +69,37 @@ export default function Planner() {
       <div id="plan">
         <div id="meal-planner">
           <h2 className="orange">Můj týdenní jídelníček</h2>
-        
-         
-            <label>
-              <strong>Počet porcí: </strong>
-            </label>
-            <input
-              className="portions-window"
-              type="number"
-              min={1}
-              value={defaultServings}
-              onChange={(e) => {
-                const newVal = Number(e.target.value);
-                setDefaultServings(newVal);
-                setPlan((prev) => {
-                  const updated = { ...prev };
-                  for (const day of days) {
-                    for (const type of mealTypes.map((t) => t.value)) {
-                      if (updated[day]?.[type]) {
-                        updated[day][type] = {
-                          ...(updated[day][type] as PlannedMeal),
-                          servings: newVal,
-                        };
-                      }
+
+          <label>
+            <strong>Počet porcí: </strong>
+          </label>
+          <input
+            className="portions-window"
+            type="number"
+            min={1}
+            value={defaultServings}
+            onChange={(e) => {
+              const newVal = Number(e.target.value);
+              setDefaultServings(newVal);
+              setPlan((prev) => {
+                const updated = { ...prev };
+                for (const day of days) {
+                  for (const type of mealTypes.map((t) => t.value)) {
+                    if (updated[day]?.[type]) {
+                      updated[day][type] = {
+                        ...(updated[day][type] as PlannedMeal),
+                        servings: newVal,
+                      };
                     }
                   }
-                  return updated;
-                });
-              }}
-             
-            />
-         
+                }
+                return updated;
+              });
+            }}
+          />
+
           {days.map((day) => (
-            <DayMealSelector
-              key={day}
-              day={day}
-              plan={plan}
-              selectMeal={selectMeal}
-            />
+            <DayMealSelector key={day} day={day} plan={plan} selectMeal={selectMeal} />
           ))}
         </div>
 
