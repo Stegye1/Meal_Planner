@@ -17,12 +17,12 @@ export default function MealDetailPage() {
   const meal: Meal | null = useGetMealDB(id);
   const ingredients: Ingredient[] | null = useGetAllIngredientsDB();
 
-  const storageId = meal?.picture as Id<"_storage">;
+  const storageId = meal?.pictureStorageId as Id<"_storage">;
   const imageUrl = useGetImageUrlDB(storageId);
 
   const mealIngredients = meal?.ingredients.map((ing) => {
     const ingredient = ingredients?.find((i) => i._id === ing.ingredientId);
-    return `${ingredient?.name} – ${ing.amount} ${ingredient?.unit}`;
+    return `${ingredient?.name} - ${ing.amount} ${ingredient?.unit}`;
   });
 
   if (!meal || !mealIngredients) {
