@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { mealTypes } from "@/app/recipes/components/Recipeform";
+import { mealTypes } from "@/app/meals/components/MealForm";
 import { useGetAllMealsDB } from "@/lib/db/meals/use-get-all-meals-db";
 import { Day, Meal, MealType, PlannedMeal, WeekPlan } from "@/types";
 import { DayMealSelector } from "./components/DayMealSelector";

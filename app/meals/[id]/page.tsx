@@ -8,9 +8,9 @@ import { useGetAllIngredientsDB } from "@/lib/db/ingredients/use-get-all-ingredi
 import { useGetMealDB } from "@/lib/db/meals/use-get-meal-db";
 import { Ingredient, Meal } from "@/types";
 //import { meals, ingredients } from "../../../mock-data";
-import "../Recipes.css";
+import "../Meals.css";
 
-export default function RecipeDetail() {
+export default function MealDetailPage() {
   const params = useParams();
   const id = params.id as Id<"meals">;
 
@@ -65,7 +65,7 @@ export default function RecipeDetail() {
         <p>Omlouváme se, nepodařilo se načíst recept.</p>
       )}
 
-      <Link className="button" href={`/recipes/${id}/change-recipe`}>
+      <Link className="button" href={`/meals/${id}/change-meal`}>
         Upravit
       </Link>
     </main>

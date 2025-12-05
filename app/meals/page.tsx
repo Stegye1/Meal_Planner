@@ -5,23 +5,23 @@ import { useGetAllIngredientsDB } from "@/lib/db/ingredients/use-get-all-ingredi
 import { useGetAllMealsDB } from "@/lib/db/meals/use-get-all-meals-db";
 import { Ingredient, Meal } from "@/types";
 //import { meals } from "../../mock-data";
-import "./Recipes.css";
-import { RecipeCard } from "./components/RecipeCard";
+import "./Meals.css";
+import { MealCard } from "./components/MealCard";
 
-export default function Recipes() {
-  const recipes: Meal[] | null = useGetAllMealsDB();
+export default function MealsPage() {
+  const meals: Meal[] | null = useGetAllMealsDB();
   const ingredients: Ingredient[] | null = useGetAllIngredientsDB();
 
   return (
-    <main className="recipes-page">
+    <main className="meals-page">
       <h1>Recepty</h1>
-      <p className="recipes-intro">
+      <p className="meals-intro">
         Zde najdete všechny recepty z databáze. Později přidáme vyhledávání a filtrování podle typu jídla.
       </p>
-      {recipes ? (
-        <div className="recipes-grid">
-          {recipes.map((meal) => (
-            <RecipeCard key={meal._id} meal={meal} />
+      {meals ? (
+        <div className="meals-grid">
+          {meals.map((meal) => (
+            <MealCard key={meal._id} meal={meal} />
           ))}
         </div>
       ) : (

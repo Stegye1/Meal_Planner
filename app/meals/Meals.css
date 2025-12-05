@@ -1,4 +1,4 @@
-.recipes-page {
+.meals-page {
   padding: 20px 60px;
   background-color: var(--bg-color);
   text-align: center;
@@ -10,12 +10,12 @@
   text-align: start;
 }
 
-.recipes-intro {
+.meals-intro {
   color: #444;
   margin-bottom: 20px;
 }
 
-.recipes-grid {
+.meals-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 30px;
@@ -24,7 +24,7 @@
   color: #fefbd9;
 }
 
-.recipe-card {
+.meal-card {
   background-color: #fffef3;
   border-radius: 16px;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
@@ -36,12 +36,12 @@
   text-decoration: none;
 }
 
-.recipe-card:hover {
+.meal-card:hover {
   transform: scale(1.02);
   box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
 }
 
-.recipe-img {
+.meal-img {
   width: 100%;
   height: 200px;
   object-fit: cover;
@@ -55,7 +55,7 @@
   border-radius: 10px;
 }
 
-.recipe-img-empty {
+.meal-img-empty {
   width: 100%;
   height: 200px;
   background-color: #fffef3;
@@ -68,28 +68,28 @@
   color: #f3e897;
 }
 
-.recipe-title {
+.meal-title {
   margin-top: 10px;
   color: #f68537;
 }
 
-.recipe-info {
+.meal-info {
   margin: 8px 0;
   font-size: 0.95rem;
 }
 
-.recipe-ingredients ul {
+.meal-ingredients ul {
   margin: 0;
   padding-left: 20px;
 }
 
-.recipe-steps p {
+.meal-steps p {
   margin-top: 5px;
   color: #555;
 }
 
 /* ----------nový recept--------------- */
-.new-recipe-form {
+.new-meal-form {
   margin-top: 2rem;
   display: flex;
   flex-direction: column;
@@ -97,7 +97,7 @@
 }
 
 /* Label a pole vedle sebe, label vlevo, pole vpravo */
-.new-recipe-form label {
+.new-meal-form label {
   display: flex;
   align-items: center;
   font-weight: 600;
@@ -107,21 +107,21 @@
 }
 
 /* Text labela zabírá pevnou šířku a je zarovnán vlevo */
-.new-recipe-form label > :first-child {
+.new-meal-form label > :first-child {
   flex: 0 0 120px; /* šířka labelu */
   text-align: left;
 }
 
-.new-recipe-form fieldset {
+.new-meal-form fieldset {
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 100%;
 }
 
 /* Pole pro vyplnění (input, textarea, select) výplní zbytek místa */
-.new-recipe-form input[type="text"],
-.new-recipe-form textarea,
-.new-recipe-form select {
+.new-meal-form input[type="text"],
+.new-meal-form textarea,
+.new-meal-form select {
   flex: 1;
   padding: 0.5rem;
   font-size: 1rem;
@@ -130,7 +130,7 @@
   cursor: pointer;
 }
 
-.new-recipe-form input[type="number"] {
+.new-meal-form input[type="number"] {
   width: 3rem;
   padding: 0.5rem;
   font-size: 1rem;
@@ -140,18 +140,18 @@
 }
 
 /* Checkboxy - label jako flex s políčkem napravo */
-.new-recipe-form fieldset {
+.new-meal-form fieldset {
   border: none;
   padding: 0;
   margin: 0;
 }
 
-.new-recipe-form fieldset legend {
+.new-meal-form fieldset legend {
   font-weight: 700;
   margin-bottom: 0.5rem;
 }
 
-.new-recipe-form fieldset label {
+.new-meal-form fieldset label {
   display: flex;
   align-items: start;
   gap: 0.5rem;
@@ -159,24 +159,24 @@
 }
 
 /* Checkbox má pointer */
-.new-recipe-form input[type="checkbox"] {
+.new-meal-form input[type="checkbox"] {
   cursor: pointer;
   width: 3rem;
 }
 
-.new-recipe-form fieldset > label > input[type="checkbox"] {
+.new-meal-form fieldset > label > input[type="checkbox"] {
   margin: 0;
 }
 
 /* U seznamu ingrediencí - tlačítka a input s pointerem */
-.new-recipe-form button,
-.new-recipe-form input[type="number"] [min="1"] {
+.new-meal-form button,
+.new-meal-form input[type="number"] [min="1"] {
   cursor: pointer;
   width: 4rem;
 }
 
 /* Tlačítko odebrat ingredienci */
-.new-recipe-form button[aria-label="Odebrat ingredienci"] {
+.new-meal-form button[aria-label="Odebrat ingredienci"] {
   background: none;
   border: none;
   font-size: 1.2rem;
@@ -186,7 +186,7 @@
 }
 
 /* Hlavní tlačítko uložit */
-.new-recipe-form > button[type="submit"] {
+.new-meal-form > button[type="submit"] {
   align-self: flex-end;
   padding: 0.5rem 1rem;
   background-color: #f97316;
@@ -197,7 +197,7 @@
   width: 10rem;
 }
 
-.new-recipe-form > button[type="submit"]:hover {
+.new-meal-form > button[type="submit"]:hover {
   background-color: #ea580c;
 }
 

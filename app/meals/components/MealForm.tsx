@@ -2,7 +2,7 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
-import "@/app/recipes/Recipes.css";
+import "@/app/meals/Meals.css";
 import { Id } from "@/convex/_generated/dataModel";
 import { useGetImageUrlDB } from "@/lib/db/images/use-get-image-url-db";
 import { useUploadImageDB } from "@/lib/db/images/use-upload-image-db";
@@ -10,7 +10,7 @@ import { useGetAllIngredientsDB } from "@/lib/db/ingredients/use-get-all-ingredi
 import { useAddMealDB } from "@/lib/db/meals/use-add-meal-db";
 import { useGetMealDB } from "@/lib/db/meals/use-get-meal-db";
 import { useUpdateMealDB } from "@/lib/db/meals/use-update-meal-db";
-import { IngredientAmount, Meal, MealType, Preparation } from "@/types";
+import { IngredientAmount, Meal, MealType, Nutrients, Preparation } from "@/types";
 
 export const mealTypes: { label: string; value: MealType }[] = [
   { label: "Snídaně", value: "breakfast" },
@@ -18,7 +18,7 @@ export const mealTypes: { label: string; value: MealType }[] = [
   { label: "Večeře", value: "dinner" },
 ];
 
-export default function RecipeForm() {
+export default function MealForm() {
   const router = useRouter();
 
   const { uploadImage } = useUploadImageDB();
@@ -26,37 +26,40 @@ export default function RecipeForm() {
   const { updateMeal } = useUpdateMealDB();
 
   const params = useParams();
-  const id = params.id as Id<"meals"> | null;
+  const id = params.id ? params.id != "new-meal" ? params.id as Id<"meals"> : null : null;
 
   // pokud id není nebo je "ingredient-form", bereme to jako NEW
   // const isNew = !id;
 
-  const recipe: Meal | null = useGetMealDB(id);
+  const meal: Meal | null = useGetMealDB(id);
 
   // Stav formuláře
-  const [name, setName] = useState(recipe ? recipe.name : "");
-  const [types, setTypes] = useState<MealType[]>(recipe ? recipe.types : []);
-  const [servings, setServings] = useState(recipe ? recipe.servings : 1);
-  const [picture, setPicture] = useState<Id<"_storage"> | undefined>(
-    recipe ? (recipe.picture ? (recipe.picture as Id<"_storage">) : undefined) : undefined,
+  const [name, setName] = useState(meal ? meal.name : "");
+  const [types, setTypes] = useState<MealType[]>(meal ? meal.types : []);
+  const [servings, setServings] = useState(meal ? meal.servings : 1);
+  const [pictureStorageId, setPictureStorageId] = useState<Id<"_storage"> | undefined>(
+    meal ? (meal.pictureStorageId ? (meal.pictureStorageId as Id<"_storage">) : undefined) : undefined,
   ); // Získáme URL přímo z hooku – vždy aktuální!
-  const pictureUrl = useGetImageUrlDB(picture as Id<"_storage">); // pokud je picture storageId, získáme URL;
+  const pictureUrl = useGetImageUrlDB(pictureStorageId as Id<"_storage">); // pokud je picture storageId, získáme URL;
   const [prepStepsArray, setPrepStepsArray] = useState<string[]>(
-    recipe
+    meal
       ? [
-          recipe.preparation.firstStep,
-          recipe.preparation.secondStep || "",
-          recipe.preparation.thirdStep || "",
-          recipe.preparation.fourthStep || "",
+          meal.preparation.firstStep,
+          meal.preparation.secondStep || "",
+          meal.preparation.thirdStep || "",
+          meal.preparation.fourthStep || "",
         ].filter(Boolean) // odstraní prázdné trailing kroky
       : [""],
   );
   const [selectedIngredients, setSelectedIngredients] = useState<
     IngredientAmount[] // pořešit ingredience
-  >(recipe ? recipe.ingredients : []);
+  >(meal ? meal.ingredients : []);
 
   // Nutriční hodnoty spočítané na 1 porci: [kcal, tuky, sacharidy, bílkoviny]
-  const [nutrientsPerServing, setNutrientsPerServing] = useState<[number, number, number, number]>([0, 0, 0, 0]);
+
+  const emptyNutrients: Nutrients = { kcal: 0, fat: 0, carbohydrates: 0, protein: 0, sugar: 0, fiber: 0 };
+
+const [nutrientsPerServing, setNutrientsPerServing] = useState<Nutrients>(emptyNutrients);
 
   // Načtení všech ingrediencí z Convexu
   const allIngredients = useGetAllIngredientsDB();
@@ -93,37 +96,56 @@ export default function RecipeForm() {
     setPrepStepsArray((prev) => prev.map((step, i) => (i === index ? value : step)));
   };
 
-  const calculateNutrients = () => {
-    if (!allIngredients) return;
+ const calculateNutrients = () => {
+  if (!allIngredients) return;
 
-    const totalNutrients = selectedIngredients.reduce(
-      (totals, ing) => {
-        const ingredient = allIngredients.find((i) => i._id === ing.ingredientId);
-        if (!ingredient) return totals;
-        const amount = ing.amount || 0;
-        const nutrients = ingredient.nutrients || [0, 0, 0, 0];
-        return totals.map((total, idx) => total + (amount * nutrients[idx]) / 100) as [number, number, number, number];
-      },
-      [0, 0, 0, 0] as [number, number, number, number],
-    );
+  // Spočítáme celkové nutrienty
+  const totalNutrients = selectedIngredients.reduce<Nutrients>(
+    (totals, ing) => {
+      const ingredient = allIngredients.find((i) => i._id === ing.ingredientId);
+      if (!ingredient) return totals;
+      const amount = ing.amount || 0;
 
-    if (servings > 0) {
-      setNutrientsPerServing(totalNutrients.map((n) => n / servings) as [number, number, number, number]);
-    } else {
-      setNutrientsPerServing([0, 0, 0, 0]);
-    }
-  };
+      // Předpokládáme, že ingredient.nutrients má typ Nutrients nebo podobný objekt
+      const nutrients = ingredient.nutrients || emptyNutrients;
+
+      return {
+        kcal: totals.kcal + (amount * nutrients.kcal) / 100,
+        fat: totals.fat + (amount * nutrients.fat) / 100,
+        carbohydrates: totals.carbohydrates + (amount * nutrients.carbohydrates) / 100,
+        protein: totals.protein + (amount * nutrients.protein) / 100,
+        sugar: totals.sugar + (amount * nutrients.sugar) / 100,
+        fiber: totals.fiber + (amount * nutrients.fiber) / 100,
+      };
+    },
+    emptyNutrients,
+  );
+
+  if (servings > 0) {
+    setNutrientsPerServing({
+      kcal: totalNutrients.kcal / servings,
+      fat: totalNutrients.fat / servings,
+      carbohydrates: totalNutrients.carbohydrates / servings,
+      protein: totalNutrients.protein / servings,
+      sugar: totalNutrients.sugar / servings,
+      fiber: totalNutrients.fiber / servings,
+    });
+  } else {
+    setNutrientsPerServing(emptyNutrients);
+  }
+};
+
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) {
-      setPicture(undefined);
+      setPictureStorageId(undefined);
       return;
     }
 
     try {
       const storageId = (await uploadImage(file)) as Id<"_storage">; // ← vrací Id<"_storage">
-      setPicture(storageId);
+      setPictureStorageId(storageId);
       // pictureUrl se aktualizuje automaticky díky useGetImageUrlDB!
     } catch (err) {
       alert("Nepodařilo se nahrát obrázek");
@@ -141,17 +163,35 @@ export default function RecipeForm() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!name.trim() || types.length === 0 || selectedIngredients.length === 0) {
-      alert("Vyplňte všechny povinné údaje a přidejte ingredience");
-      return;
-    }
+  if (!name.trim()) {
+    alert("Zadejte název receptu");
+    return;
+  }
 
-    if (selectedIngredients.length > 0 && nutrientsPerServing.every((n) => n === 0)) {
-      alert("Nejdříve spočítejte nutriční hodnoty.");
-      return;
-    }
+  if (types.length === 0) {
+    alert("Vyberte alespoň jeden typ jídla");
+    return;
+  }
+
+  if (selectedIngredients.length === 0) {
+    alert("Přidejte alespoň jednu ingredienci");
+    return;
+  }
+
+  const allNutrientsZero = 
+    nutrientsPerServing.kcal === 0 &&
+    nutrientsPerServing.fat === 0 &&
+    nutrientsPerServing.carbohydrates === 0 &&
+    nutrientsPerServing.protein === 0 &&
+    nutrientsPerServing.sugar === 0 &&
+    nutrientsPerServing.fiber === 0;
+
+  if (allNutrientsZero) {
+    alert("Nejdříve spočítejte nutriční hodnoty");
+    return;
+  }
 
     const preparationObj = toPreparationObject(prepStepsArray);
 
@@ -159,7 +199,7 @@ export default function RecipeForm() {
       name,
       types,
       servings,
-      picture: picture ?? undefined,
+      pictureStorageId: pictureStorageId ?? undefined,
       ingredients: selectedIngredients,
       nutrients: nutrientsPerServing,
       preparation: preparationObj,
@@ -172,20 +212,21 @@ export default function RecipeForm() {
         await updateMeal({ _id: id as Id<"meals">, ...payload });
       }
 
-      router.push("/recipes");
+      router.push("/meals");
     } catch (error) {
       alert("Chyba při ukládání receptu");
       console.error(error);
     }
   };
 
+
   return (
     <form className="app-form" onSubmit={handleSubmit}>
       {/* Název receptu */}
       <div className="form-group">
-        <label htmlFor="recipe-name">Název receptu</label>
+        <label htmlFor="meal-name">Název receptu</label>
         <input
-          id="recipe-name"
+          id="meal-name"
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -226,7 +267,7 @@ export default function RecipeForm() {
       <div className="form-group">
         <label htmlFor="image-url">URL obrázku (volitelné)</label>
         <input
-          id="recipe-image"
+          id="meal-image"
           type="file"
           accept="image/*"
           onChange={handleFileChange}
@@ -264,7 +305,7 @@ export default function RecipeForm() {
               required
             />
             <button type="button" onClick={() => removeIngredient(i)} className="button remove-btn">
-              ×
+              x
             </button>
           </div>
         ))}
@@ -306,18 +347,21 @@ export default function RecipeForm() {
         Spočítat nutriční hodnoty
       </button>
 
-      {nutrientsPerServing && (
-        <div className="nutrients-preview">
-          <p>Kcal na porci: {nutrientsPerServing[0].toFixed(1)}</p>
-          <p>Tuky na porci: {nutrientsPerServing[1].toFixed(1)} g</p>
-          <p>Sacharidy na porci: {nutrientsPerServing[2].toFixed(1)} g</p>
-          <p>Bílkoviny na porci: {nutrientsPerServing[3].toFixed(1)} g</p>
+     {nutrientsPerServing && (
+  <div className="nutrients-preview">
+    <p>Kcal na porci: {nutrientsPerServing.kcal.toFixed(1)}</p>
+    <p>Tuky na porci: {nutrientsPerServing.fat.toFixed(1)} g</p>
+    <p>Sacharidy na porci: {nutrientsPerServing.carbohydrates.toFixed(1)} g</p>
+    <p>Cukr na porci: {nutrientsPerServing.sugar.toFixed(1)} g</p>
+    <p>Vláknina na porci: {nutrientsPerServing.fiber.toFixed(1)} g</p>
+    <p>Bílkoviny na porci: {nutrientsPerServing.protein.toFixed(1)} g</p>
 
-          <button type="button" onClick={handleSubmit} className="action-button">
-            Uložit recept
-          </button>
-        </div>
-      )}
+    <button type="button" onClick={handleSubmit} className="action-button">
+      Uložit recept
+    </button>
+  </div>
+)}
+
     </form>
   );
 }

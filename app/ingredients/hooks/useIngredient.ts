@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAddIngredientDB } from "@/lib/db/ingredients/use-add-ingredient-db";
 import { useGetIngredientDB } from "@/lib/db/ingredients/use-get-ingredient-db";
 import { useUpdateIngredientDB } from "@/lib/db/ingredients/use-update-ingredient-db";
+import { AltUnit } from "../components/IngredientAltUnitsFieldset";
 import { useIngredientFormState } from "./useIngredientFormState";
 import { useIngredientNavigation } from "./useIngredientNavigation";
 import { useIngredientId } from "./useIntredientId";

@@ -52,10 +52,10 @@ export function Header({ headerAction: headerActionProp }: HeaderProps) {
         Registrace/Přihlášení
       </button>
     );
-  } else if (pathname === "/recipes") {
+  } else if (pathname === "/meals") {
     headerAction = (
       <div className="flex">
-        <Link className="nav-action" href="/recipes/new-recipe/">
+        <Link className="nav-action" href="/meals/new-meal/">
           Přidat recept
         </Link>
         <Link className="nav-action" href="/ingredients/new-ingredient/">
@@ -90,7 +90,7 @@ export function Header({ headerAction: headerActionProp }: HeaderProps) {
           </li>
 
           <li>
-            <Link href="/recipes">Recepty</Link>
+            <Link href="/meals">Recepty</Link>
           </li>
 
           <li>

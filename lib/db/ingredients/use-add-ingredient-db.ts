@@ -1,6 +1,6 @@
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
-
+/*
 export function useAddIngredientDB() {
   const addIngredient = useMutation(api.mutations.addIngredient.addIngredient);
 
@@ -11,3 +11,12 @@ export function useAddIngredientDB() {
     },
   };
 }
+*/
+
+
+export function useAddIngredientDB() {
+  const addIngredient = useMutation(api.mutations.addIngredient.addIngredient);
+  
+  return { addIngredient }; 
+}
+

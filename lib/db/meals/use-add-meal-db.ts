@@ -6,7 +6,6 @@ import { MealInput } from "@/types";
 export function useAddMealDB() {
   const addMealDB = useMutation(api.mutations.addMeal.addMeal);
 
-  // Žádný upload tady – jen předání dat
   const addMeal = async (data: MealInput) => {
     await addMealDB(data);
   };

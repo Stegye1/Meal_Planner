@@ -1,7 +1,7 @@
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
-
+/*
 export function useUpdateIngredientDB() {
   const updateIngredient = useMutation(api.mutations.updateIngredient.updateIngredient);
 
@@ -16,4 +16,11 @@ export function useUpdateIngredientDB() {
       return id;
     }, // vrací ID upravené ingredience
   };
+}
+*/
+
+
+export function useUpdateIngredientDB() {
+  const updateIngredient = useMutation(api.mutations.updateIngredient.updateIngredient); 
+  return { updateIngredient };
 }

@@ -2,18 +2,18 @@
 
 import { useGetIngredientDB } from "@/lib/db/ingredients/use-get-ingredient-db";
 import { Ingredient } from "@/types";
-import "../../recipes/Recipes.css";
+import "../../meals/Meals.css";
 import { useIngredientId } from "../hooks/useIntredientId";
 import { IngredientDetail } from "./components/IngredientDetail";
 import { IngredientDetailActions } from "./components/IngredientDetailActions";
 
-export default function RecipeDetail() {
+export default function IngredientDetailPage() {
   const { id } = useIngredientId();
 
   const ingredient: Ingredient | null = useGetIngredientDB(id);
 
   return (
-    <main className="recipe-detail">
+    <main className="meal-detail">
       {ingredient ? (
         <IngredientDetail ingredient={ingredient} />
       ) : (
