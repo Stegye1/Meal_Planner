@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Id } from "@/convex/_generated/dataModel";
 import { useGetImageUrlDB } from "@/lib/db/images/use-get-image-url-db";
@@ -14,7 +15,7 @@ export function MealCard({ meal }: Props) {
   return (
     <Link href={`/meals/${meal._id}`} className="meal-card">
       {imageUrl ? (
-        <img src={imageUrl} alt={meal.name} className="meal-img" />
+        <Image src={imageUrl} alt={meal.name} className="meal-img" />
       ) : (
         <div className="meal-img-empty">Chybí obrázek</div>
       )}

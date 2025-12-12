@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -73,7 +74,7 @@ export function Header({ headerAction: headerActionProp }: HeaderProps) {
     <header className="header">
       <nav className="nav">
         <div className="logo">
-          <img src="logo.jpg" alt="Logo" />
+          <Image src="logo.jpg" alt="Logo" />
         </div>
 
         <ul className="nav-links">

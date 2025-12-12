@@ -9,6 +9,7 @@ import { useGetMealDB } from "@/lib/db/meals/use-get-meal-db";
 import { Ingredient, Meal } from "@/types";
 //import { meals, ingredients } from "../../../mock-data";
 import "../Meals.css";
+import Image from "next/image";
 
 export default function MealDetailPage() {
   const params = useParams();
@@ -36,7 +37,7 @@ export default function MealDetailPage() {
           <h2>{meal.name}</h2>
 
           {imageUrl ? (
-            <img src={imageUrl} alt={meal.name} className="meal-img-detail" />
+            <Image src={imageUrl} alt={meal.name} className="meal-img-detail" />
           ) : (
             <div className="meal-img-empty">Chybí obrázek</div>
           )}

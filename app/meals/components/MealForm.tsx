@@ -11,6 +11,7 @@ import { useAddMealDB } from "@/lib/db/meals/use-add-meal-db";
 import { useGetMealDB } from "@/lib/db/meals/use-get-meal-db";
 import { useUpdateMealDB } from "@/lib/db/meals/use-update-meal-db";
 import { IngredientAmount, Meal, MealType, Nutrients, Preparation } from "@/types";
+import Image from "next/image";
 
 export const mealTypes: { label: string; value: MealType }[] = [
   { label: "Snídaně", value: "breakfast" },
@@ -262,7 +263,7 @@ const [nutrientsPerServing, setNutrientsPerServing] = useState<Nutrients>(emptyN
       </div>
 
       {/* Obrázek */}
-      {pictureUrl && <img src={pictureUrl} alt="Náhled obrázku" style={{ maxWidth: "200px", marginTop: 10 }} />}
+      {pictureUrl && <Image src={pictureUrl} alt="Náhled obrázku" style={{ maxWidth: "200px", marginTop: 10 }} />}
 
       <div className="form-group">
         <label htmlFor="image-url">URL obrázku (volitelné)</label>
