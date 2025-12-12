@@ -4,13 +4,13 @@
   --foreground: #171717;
   --action: #f68537;
 }
-
+/* 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #4fbf12;
     --foreground: #fefefe;
   }
-}
+} */
 
 /* === Reset a základní styly === */
 * {
@@ -30,6 +30,12 @@ h1 {
   font-weight: 400;
   color: #2d3748;
   text-align: center;
+}
+
+.flex-between {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 /* === FORMULÁŘE === */

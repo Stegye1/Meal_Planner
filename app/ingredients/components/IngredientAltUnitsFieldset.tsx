@@ -1,47 +1,34 @@
+import { useFieldArray, useFormContext } from "react-hook-form";
 import { useState } from "react";
 
-export type AltUnit = { name: string; unitsPerAltUnit: number };
-
 type Props = {
-  value: AltUnit[];
-  onChange: (value: AltUnit[]) => void;
-  mainUnit: "g" | "ml";
+  mainUnit?: "g" | "ml";  // volitelné
 };
 
-export function IngredientAltUnitsFieldset({ value, onChange, mainUnit }: Props) {
+export function IngredientAltUnitsFieldset({ mainUnit }: Props) {
+  const { control } = useFormContext<FormData>();
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "altUnits",
+  });
+  
   const [tempName, setTempName] = useState("lžíce");
   const [tempConversion, setTempConversion] = useState(1);
 
-  // Select možnosti pro názvy (společné pro g/ml)
-  const unitNameOptions = [
-    "lžíce",
-    "lžička", 
-    "špetka",
-    "hrnek",  
-    "kus"
-  ];
+  const unitNameOptions = ["lžíce", "lžička", "špetka", "hrnek", "kus"];
 
   const addUnit = () => {
     if (tempName.trim()) {
-      const newUnit: AltUnit = { 
-        name: tempName.trim(), 
-        unitsPerAltUnit: tempConversion 
-      };
-      onChange([...value, newUnit]);
+      append({ name: tempName.trim(), unitsPerAltUnit: tempConversion });
       setTempName("lžíce");
-      
+      setTempConversion(1);
     }
-  };
-
-  const removeUnit = (index: number) => {
-    onChange(value.filter((_, i) => i !== index));
   };
 
   return (
     <div className="form-group">
       <label>Alternativní jednotky + převod na základní jednotku (volitelné)</label>
       
-      {/* Přidání nové jednotky */}
       <div className="flex gap-2 mb-4">
         <select
           value={tempName}
@@ -52,33 +39,28 @@ export function IngredientAltUnitsFieldset({ value, onChange, mainUnit }: Props)
             <option key={name} value={name}>{name}</option>
           ))}
         </select>
-        
         <input
           type="number"
           value={tempConversion}
           onChange={(e) => setTempConversion(+e.target.value)}
-          placeholder="Zadejte převod na základní jednotku "
-         
+          placeholder="Převod"
           step={1}
           className="app-input w-24"
+          min={0}
         />
-        
-        <button type="button" onClick={addUnit} className="btn btn-primary">
-          +
-        </button>
+        <button type="button" onClick={addUnit} className="btn btn-primary">+</button>
       </div>
 
-      {/* Seznam přidaných */}
-      {value.length > 0 && (
+      {fields.length > 0 && (
         <div className="space-y-1">
-          {value.map((unit, index) => (
-            <div key={index} className="flex items-center justify-between p-2 bg-gray-50 rounded">
+          {fields.map((field, index) => (
+            <div key={field.id} className="flex items-center justify-between p-2 bg-gray-50 rounded">
               <span>
-                [translate:{unit.name}]: {unit.unitsPerAltUnit} {mainUnit}
+                [translate:{field.name}]: {field.unitsPerAltUnit} {mainUnit}
               </span>
               <button
                 type="button"
-                onClick={() => removeUnit(index)}
+                onClick={() => remove(index)}
                 className="text-red-500 hover:text-red-700 text-sm"
               >
                 ×
@@ -90,6 +72,101 @@ export function IngredientAltUnitsFieldset({ value, onChange, mainUnit }: Props)
     </div>
   );
 }
+
+
+
+// import { useState } from "react";
+
+// export type AltUnit = { name: string; unitsPerAltUnit: number };
+
+// type Props = {
+//   value: AltUnit[];
+//   onChange: (value: AltUnit[]) => void;
+//   mainUnit: "g" | "ml";
+// };
+
+// export function IngredientAltUnitsFieldset({ value, onChange, mainUnit }: Props) {
+//   const [tempName, setTempName] = useState("lžíce");
+//   const [tempConversion, setTempConversion] = useState(1);
+
+//   // Select možnosti pro názvy (společné pro g/ml)
+//   const unitNameOptions = [
+//     "lžíce",
+//     "lžička", 
+//     "špetka",
+//     "hrnek",  
+//     "kus"
+//   ];
+
+//   const addUnit = () => {
+//     if (tempName.trim()) {
+//       const newUnit: AltUnit = { 
+//         name: tempName.trim(), 
+//         unitsPerAltUnit: tempConversion 
+//       };
+//       onChange([...value, newUnit]);
+//       setTempName("lžíce");
+      
+//     }
+//   };
+
+//   const removeUnit = (index: number) => {
+//     onChange(value.filter((_, i) => i !== index));
+//   };
+
+//   return (
+//     <div className="form-group">
+//       <label>Alternativní jednotky + převod na základní jednotku (volitelné)</label>
+      
+//       {/* Přidání nové jednotky */}
+//       <div className="flex gap-2 mb-4">
+//         <select
+//           value={tempName}
+//           onChange={(e) => setTempName(e.target.value)}
+//           className="app-input flex-1"
+//         >
+//           {unitNameOptions.map((name) => (
+//             <option key={name} value={name}>{name}</option>
+//           ))}
+//         </select>
+        
+//         <input
+//           type="number"
+//           value={tempConversion}
+//           onChange={(e) => setTempConversion(+e.target.value)}
+//           placeholder="Zadejte převod na základní jednotku "
+         
+//           step={1}
+//           className="app-input w-24"
+//         />
+        
+//         <button type="button" onClick={addUnit} className="btn btn-primary">
+//           +
+//         </button>
+//       </div>
+
+//       {/* Seznam přidaných */}
+//       {value.length > 0 && (
+//         <div className="space-y-1">
+//           {value.map((unit, index) => (
+//             <div key={index} className="flex items-center justify-between p-2 bg-gray-50 rounded">
+//               <span>
+//                 [translate:{unit.name}]: {unit.unitsPerAltUnit} {mainUnit}
+//               </span>
+//               <button
+//                 type="button"
+//                 onClick={() => removeUnit(index)}
+//                 className="text-red-500 hover:text-red-700 text-sm"
+//               >
+//                 ×
+//               </button>
+//             </div>
+//           ))}
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
 
 
 

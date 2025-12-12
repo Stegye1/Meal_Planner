@@ -8,6 +8,7 @@ import { DayMealSelector } from "./components/DayMealSelector";
 // import { days, DefaultWeekPlan, meals, mealTypes } from "../../mock-data";
 
 import { ShoppingList } from "./components/ShoppingList";
+import { Header } from "../layout/components/Header";
 
 export const days: Day[] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
@@ -65,6 +66,10 @@ export default function Planner() {
   }
 
   return (
+    <>
+    <Header actions={<button className="nav-action" onClick={() => window.print()}>
+        Vytisknout
+      </button>}/>
     <main className="main-content">
       <div id="plan">
         <div id="meal-planner">
@@ -106,5 +111,6 @@ export default function Planner() {
         <ShoppingList plan={plan} />
       </div>
     </main>
+    </>
   );
 }

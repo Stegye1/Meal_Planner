@@ -1,14 +1,62 @@
+"use client"
+
 import Link from "next/link";
 import "./App.css";
 import "./Home.css";
+import Image from "next/image";
+import { Header } from "./layout/components/Header";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function Home() {
+
+    const pathname = usePathname();
+    const [showLogin, setShowLogin] = useState(false);
+  
+    type UserData = {
+      email: string;
+    };
+  
+    const [user, setUser] = useState<UserData | null>(null);
+  
+    useEffect(() => {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      }
+    }, []);
+  
+    const handleLogin = (userData: UserData) => {
+      setUser(userData);
+      localStorage.setItem("user", JSON.stringify(userData));
+    };
+  
+    const handleLogout = () => {
+      setUser(null);
+      localStorage.removeItem("user");
+    };
+  
+  
+    const headerAction = user ? (
+      <button className="nav-action" onClick={handleLogout}>
+        Odhlásit se
+      </button>
+    ) : (
+      <button className="nav-action" onClick={() => setShowLogin(true)}>
+        Registrace/Přihlášení
+      </button>
+    );
+  
+
   return (
+    <>
+    <Header actions={headerAction} />
+  
     <main className="home">
       <div className="two-columns">
         {/* Hero sekce */}
         <section className="hero">
-          <img id="home-hero-img" alt="Psaní nákupního seznamu" src="pictures/Ruka.png" />
+          <Image id="home-hero-img" alt="Psaní nákupního seznamu" src="/pictures/Ruka.png" width={500} height={200}/>
           <h1 className="home__title">Vítejte ve Vašem chytrém jídelníčku:</h1>
           <h2 className="home__subtitle">Plánujte jídlo chytře. Nakupujte bez stresu.</h2>
           <em className="home__motto">
@@ -54,6 +102,7 @@ export default function Home() {
         nákupní seznam? Ten vznikne automaticky – přehledný, bez zbytečností a vždy připravený k použití.
       </p>
     </main>
+    </>
   );
 }
 

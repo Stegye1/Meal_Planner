@@ -15,7 +15,7 @@ export function MealCard({ meal }: Props) {
   return (
     <Link href={`/meals/${meal._id}`} className="meal-card">
       {imageUrl ? (
-        <Image src={imageUrl} alt={meal.name} className="meal-img" />
+        <Image src={imageUrl} alt={meal.name} className="meal-img" width={400} height={300} />
       ) : (
         <div className="meal-img-empty">Chybí obrázek</div>
       )}

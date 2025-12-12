@@ -3,7 +3,6 @@ import { ConvexClientProvider } from "@/app/layout/components/ConvexClientProvid
 import "./App.css";
 import "./globals.css";
 import { Footer } from "./layout/components/Footer";
-import { Header } from "./layout/components/Header";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,7 +18,6 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ConvexClientProvider>
-          <Header />
           {children}
           <Footer />
         </ConvexClientProvider>

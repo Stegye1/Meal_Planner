@@ -10,6 +10,7 @@ import { Ingredient, Meal } from "@/types";
 //import { meals, ingredients } from "../../../mock-data";
 import "../Meals.css";
 import Image from "next/image";
+import { Header } from "@/app/layout/components/Header";
 
 export default function MealDetailPage() {
   const params = useParams();
@@ -31,13 +32,22 @@ export default function MealDetailPage() {
   }
 
   return (
+    <>
+      <Header       
+            actions={<Link className="nav-action" href={`/meals/${id}/change-meal`}>Upravit jídlo</Link> }
+          />
     <main className="meal-detail">
       {meal && mealIngredients ? (
         <>
+       
           <h2>{meal.name}</h2>
 
+        
+  
+   
+
           {imageUrl ? (
-            <Image src={imageUrl} alt={meal.name} className="meal-img-detail" />
+            <Image src={imageUrl} alt={meal.name} className="meal-img-detail" height={800} width={600} />
           ) : (
             <div className="meal-img-empty">Chybí obrázek</div>
           )}
@@ -66,9 +76,8 @@ export default function MealDetailPage() {
         <p>Omlouváme se, nepodařilo se načíst recept.</p>
       )}
 
-      <Link className="button" href={`/meals/${id}/change-meal`}>
-        Upravit
-      </Link>
+     
     </main>
+    </>
   );
 }

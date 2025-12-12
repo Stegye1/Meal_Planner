@@ -7,12 +7,19 @@ import { Ingredient, Meal } from "@/types";
 //import { meals } from "../../mock-data";
 import "./Meals.css";
 import { MealCard } from "./components/MealCard";
+import { Header } from "../layout/components/Header";
 
 export default function MealsPage() {
   const meals: Meal[] | null = useGetAllMealsDB();
   const ingredients: Ingredient[] | null = useGetAllIngredientsDB();
 
   return (
+    <>
+      <Header       
+        actions={<><Link className="nav-action" href="/meals/new-meal">Přidat jídlo</Link> <Link className="nav-action" href="/ingredients/new-ingredient/">
+          Přidat ingredienci
+        </Link></>}
+      />
     <main className="meals-page">
       <h1>Recepty</h1>
       <p className="meals-intro">
@@ -41,5 +48,6 @@ export default function MealsPage() {
         <p>Omlouváme se, nepodařilo se načíst ingredience.</p>
       )}
     </main>
+    </>
   );
 }

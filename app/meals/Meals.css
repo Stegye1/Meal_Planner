@@ -1,3 +1,18 @@
+image-wrapper {
+  width: 70%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 12px;
+  background-color: #f3f3f3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image {
+  object-fit: contain;
+}
+
 .meals-page {
   padding: 20px 60px;
   background-color: var(--bg-color);
