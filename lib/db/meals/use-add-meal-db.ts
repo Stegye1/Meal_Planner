@@ -1,12 +1,10 @@
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { MealInput } from "@/types";
+import { Meal } from "@/types";
 
-// neřeší obrázek jako file, dostává jeho storageId
 export function useAddMealDB() {
   const addMealDB = useMutation(api.mutations.addMeal.addMeal);
-
-  const addMeal = async (data: MealInput) => {
+  const addMeal = async (data: Omit<Meal, "_id">) => {
     await addMealDB(data);
   };
 
