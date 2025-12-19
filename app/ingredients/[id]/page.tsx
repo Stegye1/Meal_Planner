@@ -13,12 +13,6 @@ export default function IngredientDetailPage() {
 //  const ingredient: Ingredient | null = useGetIngredientDB(id);
 const { data: ingredient, loading, error, notFound } = useGetIngredientDB(id);
 
-// if (loading) return <p>🔄 Načítám ingredienci...</p>;
-// if (error) return <p className="error">❌ {error}</p>;
-// if (notFound) return <p>⚠️ Ingredience nebyla nalezena.</p>;
-
-
-
   return (
     <>
       <Header
