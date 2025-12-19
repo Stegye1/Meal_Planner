@@ -1,7 +1,7 @@
 "use client";
 
 import { Header } from "@/app/layout/components/Header";
-import { IngredientForm } from "../components/IngredientForm";
+import IngredientForm from "../components/IngredientForm";
 
 export default function NewIngredientPage() {
   return (

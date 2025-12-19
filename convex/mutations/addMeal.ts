@@ -64,6 +64,7 @@ export const addMeal = mutation({
       v.object({
         ingredientId: v.id("ingredients"),
         amount: v.number(),
+        altUnitIndex: v.number()
       })
     ),
     nutrients: v.object({

@@ -83,15 +83,24 @@ export default function MealForm({ meal }: Props) {
         if (!ingredient || !ing.amount) return totals;
 
         const nutrients = ingredient.nutrients;
-        const amount = ing.amount;
+     //   const amount = ing.amount;
+
+      let amountInUnits = ing.amount;
+      
+      if (ing.altUnitIndex !== undefined && ingredient.altUnits) {
+        const altUnit = ingredient.altUnits[ing.altUnitIndex];
+        if (altUnit) {
+          amountInUnits = ing.amount * altUnit.unitsPerAltUnit;
+        }
+      }
 
         return {
-          kcal: totals.kcal + (amount * nutrients.kcal) / 100,
-          fat: totals.fat + (amount * nutrients.fat) / 100,
-          carbohydrates: totals.carbohydrates + (amount * nutrients.carbohydrates) / 100,
-          protein: totals.protein + (amount * nutrients.protein) / 100,
-          sugar: totals.sugar + (amount * nutrients.sugar) / 100,
-          fiber: totals.fiber + (amount * nutrients.fiber) / 100,
+          kcal: totals.kcal + (amountInUnits * nutrients.kcal) / 100,
+          fat: totals.fat + (amountInUnits * nutrients.fat) / 100,
+          carbohydrates: totals.carbohydrates + (amountInUnits * nutrients.carbohydrates) / 100,
+          protein: totals.protein + (amountInUnits * nutrients.protein) / 100,
+          sugar: totals.sugar + (amountInUnits * nutrients.sugar) / 100,
+          fiber: totals.fiber + (amountInUnits * nutrients.fiber) / 100,
         };
       },
       { kcal: 0, fat: 0, carbohydrates: 0, protein: 0, sugar: 0, fiber: 0 },
@@ -122,11 +131,24 @@ export default function MealForm({ meal }: Props) {
   };
 
   const onSubmit = async (data: FormData) => {
+
+const normalizedIngredients = data.ingredients.map(ing => ({
+    ...ing,
+    altUnitIndex: ing.altUnitIndex !== undefined 
+      ? Number(ing.altUnitIndex) 
+      : undefined
+  }));
+
+  const finalData = {
+    ...data,
+    ingredients: normalizedIngredients
+  }
+
     try {
       if (isEditing && meal) {
-        await updateMeal({ _id: meal._id, ...data });
+        await updateMeal({ _id: meal._id, ...finalData });
       } else {
-        await addMeal(data);
+        await addMeal(finalData);
       }
       router.push("/meals");
     } catch (err) {

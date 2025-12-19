@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import React from "react";
+import { AvatarMenu } from "./AvatarMenu";
 import { HeaderChoices } from "./HeaderChoices";
 
 interface HeaderProps {
@@ -17,7 +18,7 @@ export function Header({ actions }: HeaderProps) {
         </div>
 
         <HeaderChoices />
-
+        <AvatarMenu />
         {actions && <div className="header-actions">{actions}</div>}
       </nav>
     </header>

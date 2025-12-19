@@ -5,52 +5,36 @@ import "./App.css";
 import "./Home.css";
 import Image from "next/image";
 import { Header } from "./layout/components/Header";
-import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
 
-export default function Home() {
+export default function HomePage() {
 
-    const pathname = usePathname();
-    const [showLogin, setShowLogin] = useState(false);
   
-    type UserData = {
-      email: string;
-    };
+    // type UserData = {
+    //   email: string;
+    //   name: string;
+    // };
   
-    const [user, setUser] = useState<UserData | null>(null);
-  
-    useEffect(() => {
-      const storedUser = localStorage.getItem("user");
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
-      }
-    }, []);
-  
-    const handleLogin = (userData: UserData) => {
-      setUser(userData);
-      localStorage.setItem("user", JSON.stringify(userData));
-    };
-  
-    const handleLogout = () => {
-      setUser(null);
-      localStorage.removeItem("user");
-    };
+    // const [user, setUser, removeUser] = useLocalStorage<UserData | null>('user', null);
   
   
-    const headerAction = user ? (
-      <button className="nav-action" onClick={handleLogout}>
-        Odhlásit se
-      </button>
-    ) : (
-      <button className="nav-action" onClick={() => setShowLogin(true)}>
-        Registrace/Přihlášení
-      </button>
-    );
+  
+    // const headerAction = user ? (
+    //   <>
+    //   <button className="nav-action" onClick={() => {
+    //   removeUser()}}>
+    //     Odhlásit se
+    //   </button>
+    //   </>
+    // ) : (
+    //   <button className="nav-action" onClick={() => setUser({email: "pokus@email.cz", name: "Testovací uživatel"})}>
+    //     Registrace/Přihlášení
+    //   </button>
+    // );
   
 
   return (
     <>
-    <Header actions={headerAction} />
+    <Header/>
   
     <main className="home">
       <div className="two-columns">

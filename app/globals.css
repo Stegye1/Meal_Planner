@@ -38,6 +38,29 @@ h1 {
   justify-content: space-between;
 }
 
+.avatar {
+  color: #e53e3e; /* nepřihlášený - červená ikona */
+  background-color: #bebaba; /* nepřihlášený - šedé pozadí */
+  border-radius: 50%;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-width: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease; /* plynulý přechod */
+}
+
+.avatar.logged-in {
+  color: white; /* přihlášený - bílá ikona */
+  background-color: #10b981; /* emerald green */
+}
+
+.avatar:hover {
+  transform: scale(1.05); /* jemné zvětšení na hover */
+}
+
 /* === FORMULÁŘE === */
 
 /* === Globální formuláře === */
@@ -106,6 +129,10 @@ legend {
 
 .nutrient-row .app-input.small {
   width: 6rem;
+}
+
+.nutrient-row .app-input.middle {
+  width: 10rem;
 }
 
 /* === Vstupy a select === */
@@ -192,4 +219,13 @@ select.app-input:focus {
 
 .small-button {
   width: 3em;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1; /* Zobrazí šipky, ale pomůže s UX */
+}
+
+input[type="number"]:not(:placeholder-shown) {
+  /* Nula zmizí po prvním zadání */
 }

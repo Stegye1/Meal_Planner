@@ -34,6 +34,7 @@ export type MealType = "breakfast" | "lunch" | "dinner";
 // export type IngredientAmount = {
 //   ingredientId: Id<"ingredients">;
 //   amount: number;
+//     // altUnitIndex?: number;
 // };
 
 // export type Preparation = {

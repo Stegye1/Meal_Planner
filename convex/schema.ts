@@ -36,12 +36,14 @@ export default defineSchema({
     pictureStorageId: v.optional(v.id("_storage")), 
 
     
-    ingredients: v.array(
-      v.object({
-        ingredientId: v.id("ingredients"),
-        amount: v.number(),         
-      }),
-    ),
+  ingredients: v.array(
+    v.object({
+      ingredientId:v.id("ingredients"),
+      amount: v.number(), 
+      altUnitIndex: v.optional(v.number())  // když není zadaný, platí základní jednotka
+    })
+  ),
+
 
     // výživové hodnoty přepočtené na 1 porci
     nutrients: v.object({

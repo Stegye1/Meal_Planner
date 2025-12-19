@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { Header } from "@/app/layout/components/Header";
 import { useGetIngredientDB } from "@/lib/db/ingredients/use-get-ingredient-db";
-import { Ingredient } from "@/types";
 import "../../meals/Meals.css";
 import { useIngredientId } from "../hooks/useIntredientId";
 import { IngredientDetail } from "./components/IngredientDetail";
@@ -11,7 +10,14 @@ import { IngredientDetail } from "./components/IngredientDetail";
 export default function IngredientDetailPage() {
   const { id } = useIngredientId();
 
-  const ingredient: Ingredient | null = useGetIngredientDB(id);
+//  const ingredient: Ingredient | null = useGetIngredientDB(id);
+const { data: ingredient, loading, error, notFound } = useGetIngredientDB(id);
+
+// if (loading) return <p>🔄 Načítám ingredienci...</p>;
+// if (error) return <p className="error">❌ {error}</p>;
+// if (notFound) return <p>⚠️ Ingredience nebyla nalezena.</p>;
+
+
 
   return (
     <>
@@ -23,11 +29,15 @@ export default function IngredientDetailPage() {
         }
       />
       <main className="meal-detail">
-        {ingredient ? (
+         {ingredient ? (
           <IngredientDetail ingredient={ingredient} />
-        ) : (
-          <p>Omlouváme se, nepodařilo se načíst ingredienci.</p>
-        )}
+        ) : loading ? (
+          <p>Načítám ingredienci...</p>
+        ) : notFound ? (
+          <p>Ingredience nenalezena</p>
+        ) : error ? (
+          <p>Nastala chyba při načítání</p>
+        ) : null}
       </main>
     </>
   );

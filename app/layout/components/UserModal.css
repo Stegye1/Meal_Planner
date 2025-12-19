@@ -1,0 +1,113 @@
+/* Překryv přes celou obrazovku */
+.modal-overlay {
+  position: fixed;
+  top: 150;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Samotné tělo modalu */
+.modal-content {
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  width: 320px;
+  max-width: 90%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Zavírací tlačítko */
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.modal-close:hover {
+  color: #444;
+}
+
+/* Text a tlačítka */
+.modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.modal-name {
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 2px;
+}
+
+.modal-email {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.modal-message {
+  color: #555;
+  margin-bottom: 16px;
+}
+
+.modal-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 0;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.avatar:hover {
+  transform: scale(1.2); /* Zvětší o 10% */
+  transition: transform 0.15s ease; /* Plynulý přechod */
+}
+
+.modal-button.login {
+  background-color: #10b981; /* zelená */
+}
+
+.modal-button.login:hover {
+  background-color: #0d946b;
+}
+
+.modal-button.logout {
+  background-color: #ef4444; /* červená */
+}
+
+.modal-button.logout:hover {
+  background-color: #c53030;
+}
+
+/* Animace */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
