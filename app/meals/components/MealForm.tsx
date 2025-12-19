@@ -3,11 +3,10 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
-import { useGetImageUrlDB } from "@/lib/db/images/use-get-image-url-db.ts";
-import { useUploadImageDB } from "@/lib/db/images/use-upload-image-db.ts";
+import { useGetImageUrlDB } from "@/lib/db/images/use-get-image-url-db";
+import { useUploadImageDB } from "@/lib/db/images/use-upload-image-db";
 import { useGetAllIngredientsDB } from "@/lib/db/ingredients/use-get-all-ingredients-db";
-import { useAddMealDB } from "@/lib/db/meals/use-add-meal-db.ts";
-import { useUpdateMealDB } from "@/lib/db/meals/use-update-meal-db.ts";
+import { useUpdateMealDB } from "@/lib/db/meals/use-update-meal-db";
 import { Meal, MealType } from "@/types";
 import { FormActionsSection } from "./FormActionsSection";
 import { IngredientsListSection } from "./IngredientsListSection";
@@ -17,6 +16,7 @@ import { MealServingsSection } from "./MealServingsSection";
 import { MealTypesSection } from "./MealTypesSection";
 import { NutrientsSection } from "./NutrientsSection";
 import { PreparationSection } from "./PreparationSection";
+import { useAddMealDB } from "@/lib/db/meals/use-add-meal-db";
 
 export const mealTypes: { label: string; value: MealType }[] = [
   { label: "Snídaně", value: "breakfast" },
