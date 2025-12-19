@@ -20,7 +20,7 @@ export const updateMeal = mutation({
       v.object({
         ingredientId: v.id("ingredients"),
         amount: v.number(),
-        altUnitIndex: v.number()
+        altUnitIndex: v.optional(v.number())
       })
     ),
     nutrients: v.object({
