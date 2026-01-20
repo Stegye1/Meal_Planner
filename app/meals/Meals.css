@@ -15,13 +15,13 @@ image-wrapper {
 
 .meals-page {
   padding: 20px 60px;
-  background-color: var(--bg-color);
+ 
   text-align: center;
 }
 
 .meal-detail {
   padding: 20px 60px;
-  background-color: var(--bg-color);
+
   text-align: start;
 }
 
@@ -235,12 +235,21 @@ textarea {
 
 .ingredients-grid a {
   text-decoration: none;
-  color: #fefbd9;
+  color: #b38242;
 }
 .ingredients-h2 {
-  color: #fefbd9;
+  color: #b38242;
   font-size: 1.2rem;
   margin-top: 4rem;
   padding-top: 1rem;
   border-top: 1px solid #fefbd9;
 }
+
+.meal-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  margin-top: 1rem;
+}
+

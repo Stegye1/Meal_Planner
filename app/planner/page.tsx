@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { mealTypes } from "@/app/meals/components/MealForm";
+
 import { useGetAllMealsDB } from "@/lib/db/meals/use-get-all-meals-db";
 import { Day, Meal, MealType, PlannedMeal, WeekPlan } from "@/types";
 import { DayMealSelector } from "./components/DayMealSelector";
@@ -9,6 +9,7 @@ import { DayMealSelector } from "./components/DayMealSelector";
 
 import { ShoppingList } from "./components/ShoppingList";
 import { Header } from "../layout/components/Header";
+import { mealTypes } from "../meals/components/MealFormConfig";
 
 export const days: Day[] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 

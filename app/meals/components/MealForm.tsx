@@ -1,13 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React from "react";
-import { FormProvider, useFieldArray, useForm } from "react-hook-form";
+import React, { useEffect } from "react";
+import { FormProvider, useFieldArray } from "react-hook-form";
 import { useGetImageUrlDB } from "@/lib/db/images/use-get-image-url-db";
 import { useUploadImageDB } from "@/lib/db/images/use-upload-image-db";
 import { useGetAllIngredientsDB } from "@/lib/db/ingredients/use-get-all-ingredients-db";
 import { useUpdateMealDB } from "@/lib/db/meals/use-update-meal-db";
-import { Meal, MealType } from "@/types";
+import { Meal, MealFormData } from "@/types";
 import { FormActionsSection } from "./FormActionsSection";
 import { IngredientsListSection } from "./IngredientsListSection";
 import { MealImageSection } from "./MealImageSection";
@@ -17,20 +17,18 @@ import { MealTypesSection } from "./MealTypesSection";
 import { NutrientsSection } from "./NutrientsSection";
 import { PreparationSection } from "./PreparationSection";
 import { useAddMealDB } from "@/lib/db/meals/use-add-meal-db";
-
-export const mealTypes: { label: string; value: MealType }[] = [
-  { label: "Snídaně", value: "breakfast" },
-  { label: "Oběd", value: "lunch" },
-  { label: "Večeře", value: "dinner" },
-];
-
-export type FormData = Omit<Meal, "_id">;
+import { useMealForm } from "../hooks/useMealForm";
+import { useCalculateNutrients } from "../hooks/useCalculateNutrients";
 
 type Props = {
   meal?: Meal | null;
 };
 
 export default function MealForm({ meal }: Props) {
+
+  const methods = useMealForm(meal)
+
+
   const router = useRouter();
 
   const isEditing = Boolean(meal?._id);
@@ -41,23 +39,6 @@ export default function MealForm({ meal }: Props) {
   const { addMeal } = useAddMealDB();
   const { updateMeal } = useUpdateMealDB();
   const pictureUrl = useGetImageUrlDB(currentMeal?.pictureStorageId);
-
-  const methods = useForm<FormData>({
-    defaultValues: {
-      name: meal?.name ?? "",
-      types: meal?.types ?? [],
-      servings: meal?.servings ?? 1,
-      pictureStorageId: meal?.pictureStorageId ?? undefined,
-      ingredients: meal?.ingredients ?? [],
-      nutrients: meal?.nutrients ?? { kcal: 0, fat: 0, carbohydrates: 0, protein: 0, sugar: 0, fiber: 0 },
-      preparation: {
-        firstStep: meal?.preparation.firstStep ?? "",
-        secondStep: meal?.preparation.secondStep ?? "",
-        thirdStep: meal?.preparation.thirdStep ?? "",
-        fourthStep: meal?.preparation.fourthStep ?? "",
-      },
-    },
-  });
 
   const { control, handleSubmit, setValue, getValues, watch, formState } = methods;
   const ingredients = watch("ingredients");
@@ -74,75 +55,45 @@ export default function MealForm({ meal }: Props) {
     name: "ingredients",
   });
 
-  const calculateNutrients = () => {
-    if (!allIngredients?.length) return;
 
-    const totalNutrients = ingredients.reduce(
-      (totals, ing) => {
-        const ingredient = allIngredients.find((i) => i._id === ing.ingredientId);
-        if (!ingredient || !ing.amount) return totals;
+const { nutrients, isReady } = useCalculateNutrients(
+  ingredients ?? [], 
+  allIngredients ?? [], 
+  servings ?? 1, 
+);
 
-        const nutrients = ingredient.nutrients;
-     //   const amount = ing.amount;
-
-      let amountInUnits = ing.amount;
-      
-      if (ing.altUnitIndex !== undefined && ingredient.altUnits) {
-        const altUnit = ingredient.altUnits[ing.altUnitIndex];
-        if (altUnit) {
-          amountInUnits = ing.amount * altUnit.unitsPerAltUnit;
-        }
-      }
-
-        return {
-          kcal: totals.kcal + (amountInUnits * nutrients.kcal) / 100,
-          fat: totals.fat + (amountInUnits * nutrients.fat) / 100,
-          carbohydrates: totals.carbohydrates + (amountInUnits * nutrients.carbohydrates) / 100,
-          protein: totals.protein + (amountInUnits * nutrients.protein) / 100,
-          sugar: totals.sugar + (amountInUnits * nutrients.sugar) / 100,
-          fiber: totals.fiber + (amountInUnits * nutrients.fiber) / 100,
-        };
-      },
-      { kcal: 0, fat: 0, carbohydrates: 0, protein: 0, sugar: 0, fiber: 0 },
-    );
-
-    const nutrientsPerServing =
-      servings > 0
-        ? {
-            kcal: totalNutrients.kcal / servings,
-            fat: totalNutrients.fat / servings,
-            carbohydrates: totalNutrients.carbohydrates / servings,
-            protein: totalNutrients.protein / servings,
-            sugar: totalNutrients.sugar / servings,
-            fiber: totalNutrients.fiber / servings,
-          }
-        : { kcal: 0, fat: 0, carbohydrates: 0, protein: 0, sugar: 0, fiber: 0 };
-
-    setValue("nutrients", nutrientsPerServing);
-  };
+useEffect(() => {
+  if (isReady) { 
+    setValue("nutrients", nutrients);
+  }
+}, [nutrients, isReady, setValue]);
 
   const handleImageUpload = async (file: File) => {
     try {
       const storageId = await uploadImage(file);
       setValue("pictureStorageId", storageId);
     } catch (err) {
-      alert("Chyba při nahrávání obrázku");
+      alert("Chyba při nahrávání obrázku")
+      console.error("CHYBA PŘI NAHRÁVÁNÍ OBRÁZKU:", err);
     }
   };
-
-  const onSubmit = async (data: FormData) => {
-
-const normalizedIngredients = data.ingredients.map(ing => ({
+  
+const cleanedData = (data: MealFormData) => ({
+  name: data.name,
+  types: data.types,
+  servings: data.servings,
+  pictureStorageId: data.pictureStorageId,
+  preparation: data.preparation,
+  ingredients: data.ingredients.map(ing => ({
     ...ing,
-    altUnitIndex: ing.altUnitIndex !== undefined 
-      ? Number(ing.altUnitIndex) 
-      : undefined
-  }));
+    altUnitIndex: ing.altUnitIndex !== undefined ? Number(ing.altUnitIndex) : undefined
+  })),
+  nutrients: data.nutrients
+});
 
-  const finalData = {
-    ...data,
-    ingredients: normalizedIngredients
-  }
+  const onSubmit = async (data: MealFormData) => {
+
+const finalData = cleanedData(data)  
 
     try {
       if (isEditing && meal) {
@@ -171,7 +122,12 @@ const normalizedIngredients = data.ingredients.map(ing => ({
           remove={removeIngredient}
         />
         <PreparationSection />
-        <NutrientsSection onCalculate={calculateNutrients} />
+       
+        <NutrientsSection 
+  nutrients={nutrients} 
+ 
+  isReady={isReady}
+/>
         <FormActionsSection isSubmitting={isSubmitting} isEditing={isEditing} />
       </form>
     </FormProvider>

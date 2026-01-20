@@ -2,7 +2,6 @@
   margin: 0;
   padding: 20px 40px;
   text-align: center;
-  font-family: system-ui, sans-serif;
   background-color: var(--bg-color);
 }
 
@@ -15,7 +14,7 @@
 
 .home__subtitle {
   font-size: 1.75rem;
-  font-weight: 600;
+  font-weight: bold;
   margin-bottom: 1rem;
   color: #2d3748;
 }
@@ -90,8 +89,8 @@
 }
 
 #home-hero-img {
-  max-width: 480px; /* obrázek nikdy nepřesáhne šířku rodiče */
-  height: auto; /* výška se dopočítá podle poměru stran */
-  display: block; /* odstraní mezery u inline obrázků */
-  margin: 0 auto; /* volitelné – zarovnání na střed */
+  max-width: 480px; 
+  height: auto; 
+  display: block; 
+  margin: 0 auto; 
 }

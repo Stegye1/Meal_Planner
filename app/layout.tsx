@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
+import { Raleway } from "next/font/google";
 import { ConvexClientProvider } from "@/app/layout/components/ConvexClientProvider";
 import "./App.css";
 import "./globals.css";
-import { Footer } from "./layout/components/Footer";
+
+const raleway = Raleway({
+  weight: ["400", "500"],
+  subsets: ["latin-ext"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,11 +20,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={raleway.className}>
       <body>
         <ConvexClientProvider>
           {children}
-          <Footer />
+      {/*    <Footer />  */}
         </ConvexClientProvider>
       </body>
     </html>

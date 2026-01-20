@@ -1,6 +1,7 @@
 /* === Základní proměnné === */
 :root {
-  --background: rgba(230, 232, 89, 0.9);
+  /* --background: rgba(230, 232, 89, 0.9); */
+   --background: rgba(232, 201, 89, 0.092);
   --foreground: #171717;
   --action: #f68537;
 }
@@ -22,7 +23,7 @@ body {
   padding: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: "Raleway", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  /* font-family: "Raleway", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif; */
 }
 
 h1 {
@@ -228,4 +229,47 @@ input[type="number"]::-webkit-outer-spin-button {
 
 input[type="number"]:not(:placeholder-shown) {
   /* Nula zmizí po prvním zadání */
+}
+
+/* === Landing Page === */
+/* 
+.animate-spin-slow {
+  animation: spin 20s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+} */
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }

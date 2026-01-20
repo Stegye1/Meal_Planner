@@ -1,7 +1,6 @@
 import { MealFormData } from "@/types";
 import { useFormContext } from "react-hook-form";
-import { mealTypes } from "./MealForm";
-
+import { mealTypes } from "./MealFormConfig";
 
 export function MealTypesSection() {
   const { watch, setValue, formState: { errors } } = useFormContext<MealFormData>();
@@ -34,38 +33,3 @@ export function MealTypesSection() {
     </fieldset>
   );
 }
-
-
-// export function MealTypesSection({ control }: { control: Control<FormData> }) {
-//   return (
-//     <Controller
-//       name="types"
-//       control={control}
-//       rules={{ validate: (types) => types.length > 0 || "Vyberte typ" }}
-//       render={({ field, fieldState: { error } }) => (
-//         <fieldset className="form-group">
-//           <legend>Typy jídel</legend>
-//           <div className="meal-types-items">
-//             {mealTypes.map(({ value, label }) => (
-//               <label key={value}>
-//                 <input
-//                   type="checkbox"
-//                   value={value}
-//                   checked={field.value.includes(value)}
-//                   onChange={(e) => {
-//                     const newValue = e.target.checked
-//                       ? [...field.value, value]
-//                       : field.value.filter((t: string) => t !== value);
-//                     field.onChange(newValue);
-//                   }}
-//                 />
-//                 {label}
-//               </label>
-//             ))}
-//           </div>
-//           {error && <span className="error">{error.message}</span>}
-//         </fieldset>
-//       )}
-//     />
-//   );
-// }

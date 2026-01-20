@@ -4,14 +4,14 @@ import { FormProvider } from "react-hook-form";
 import { useAddIngredientDB } from "@/lib/db/ingredients/use-add-ingredient-db";
 import { useUpdateIngredientDB } from "@/lib/db/ingredients/use-update-ingredient-db";
 import { Ingredient } from "@/types";
+import { useIngredientForm } from "../hooks/useIngredientForm";
 import { useIngredientNavigation } from "../hooks/useIngredientNavigation";
 import IngredientActionsSection from "./IngredientActionsSection";
 import IngredientAltUnitsSection from "./IngredientAltUnitsSection";
 import IngredientNameSection from "./IngredientNameSection";
-import IngredientNutrientsSection from "./IngredientNutrientsSection";
 import IngredientUnitSection from "./IngredientUnitSection";
 import { IngredientFormData } from "./types";
-import { useIngredientForm } from "./useIngredientForm";
+import IngredientNutrientsSection from "./IngredientNutrientsSection";
 
 type Props = {
   ingredient?: Ingredient | null;
@@ -71,7 +71,7 @@ export default function IngredientForm({ ingredient }: Props) {
         <IngredientNameSection />
         <IngredientUnitSection />
         <IngredientAltUnitsSection />
-        <IngredientNutrientsSection />
+         <IngredientNutrientsSection /> 
         <IngredientActionsSection isSubmitting={isSubmitting} isEditing={isEditing} />
       </form>
     </FormProvider>

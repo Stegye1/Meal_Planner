@@ -10,7 +10,6 @@ import { IngredientDetail } from "./components/IngredientDetail";
 export default function IngredientDetailPage() {
   const { id } = useIngredientId();
 
-//  const ingredient: Ingredient | null = useGetIngredientDB(id);
 const { data: ingredient, loading, error, notFound } = useGetIngredientDB(id);
 
   return (

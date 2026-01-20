@@ -4,7 +4,13 @@ import { Id, Doc } from "@/convex/_generated/dataModel";
 export type Ingredient = Doc<"ingredients">;
 
 export type Meal = Doc<"meals">;
-export type MealFormData = Omit<Meal, "_id" | "authorId" | "createdAt" | "updatedAt">;
+
+
+export type MealFormDataNew = Omit<Meal, "_id" | "authorId" | "createdAt" | "_creationTime" | "updatedAt">;
+
+export type MealFormDataUpdate = Omit<Meal, "authorId" | "createdAt" | "_creationTime" | "updatedAt">;
+  
+export type MealFormData = MealFormDataNew | MealFormDataUpdate
 
 
 

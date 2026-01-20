@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useGetAllIngredientsDB } from "@/lib/db/ingredients/use-get-all-ingredients-db";
 import { useGetAllMealsDB } from "@/lib/db/meals/use-get-all-meals-db";
 import { Ingredient, Meal } from "@/types";
-//import { meals } from "../../mock-data";
 import "./Meals.css";
 import { MealCard } from "./components/MealCard";
 import { Header } from "../layout/components/Header";
