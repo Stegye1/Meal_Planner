@@ -3,6 +3,7 @@ import { Raleway } from "next/font/google";
 import { ConvexClientProvider } from "@/app/layout/components/ConvexClientProvider";
 import "./App.css";
 import "./globals.css";
+import FooterHandler from "./layout/components/FooterHandler";
 
 const raleway = Raleway({
   weight: ["400", "500"],
@@ -19,12 +20,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en" className={raleway.className}>
       <body>
         <ConvexClientProvider>
           {children}
-      {/*    <Footer />  */}
+        <FooterHandler />
         </ConvexClientProvider>
       </body>
     </html>
