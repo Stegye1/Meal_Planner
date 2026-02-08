@@ -1,7 +1,7 @@
 /* === Základní proměnné === */
 :root {
   /* --background: rgba(230, 232, 89, 0.9); */
-   --background: rgba(232, 201, 89, 0.092);
+  --background: rgba(232, 201, 89, 0.092);
   --foreground: #171717;
   --action: #f68537;
 }
@@ -117,7 +117,7 @@ legend {
 }
 
 /* === Výž. hodnoty === */
-.nutrient-row {
+/* .nutrient-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -134,7 +134,7 @@ legend {
 
 .nutrient-row .app-input.middle {
   width: 10rem;
-}
+} */
 
 /* === Vstupy a select === */
 input.app-input,
@@ -272,4 +272,66 @@ input[type="number"]:not(:placeholder-shown) {
 
 .animate-float {
   animation: float 6s ease-in-out infinite;
+}
+
+/* === Nutrition table === */
+.nutrition-table {
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 0 1rem;
+  max-width: 28rem;
+}
+
+.nutrition-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.nutrition-table th,
+.nutrition-table td {
+  padding: 4px 12px;
+  text-align: left;
+}
+
+.nutrition-table td:last-child {
+  text-align: right;
+}
+
+.nutrition-table tr {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.nutrition-table tr:last-child {
+  border-bottom: none;
+}
+
+.nutrition-table tr.header {
+  background-color: #f3f4f6;
+  font-weight: bold;
+}
+
+.nutrition-table .sub-row {
+  font-size: 13px;
+  color: #4b5563;
+}
+
+.nutrition-table .sub-row td:first-child {
+  padding-left: 40px;
+}
+
+.nutrition-table table td:first-child {
+  width: 65%;
+}
+.nutrition-table table td:last-child {
+  width: 35%;
+  font-variant-numeric: tabular-nums;
+}
+
+/* === Nutrition table v app-form === */
+.app-form .nutrition-table {
+  margin-left: auto;
+  margin-right: auto;
 }

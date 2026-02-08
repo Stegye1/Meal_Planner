@@ -6,8 +6,11 @@ import { FormProvider, useFieldArray } from "react-hook-form";
 import { useGetImageUrlDB } from "@/lib/db/images/use-get-image-url-db";
 import { useUploadImageDB } from "@/lib/db/images/use-upload-image-db";
 import { useGetAllIngredientsDB } from "@/lib/db/ingredients/use-get-all-ingredients-db";
+import { useAddMealDB } from "@/lib/db/meals/use-add-meal-db";
 import { useUpdateMealDB } from "@/lib/db/meals/use-update-meal-db";
 import { Meal, MealFormData } from "@/types";
+import { useCalculateNutrients } from "../hooks/useCalculateNutrients";
+import { useMealForm } from "../hooks/useMealForm";
 import { FormActionsSection } from "./FormActionsSection";
 import { IngredientsListSection } from "./IngredientsListSection";
 import { MealImageSection } from "./MealImageSection";
@@ -16,18 +19,13 @@ import { MealServingsSection } from "./MealServingsSection";
 import { MealTypesSection } from "./MealTypesSection";
 import { NutrientsSection } from "./NutrientsSection";
 import { PreparationSection } from "./PreparationSection";
-import { useAddMealDB } from "@/lib/db/meals/use-add-meal-db";
-import { useMealForm } from "../hooks/useMealForm";
-import { useCalculateNutrients } from "../hooks/useCalculateNutrients";
 
 type Props = {
   meal?: Meal | null;
 };
 
 export default function MealForm({ meal }: Props) {
-
-  const methods = useMealForm(meal)
-
+  const methods = useMealForm(meal);
 
   const router = useRouter();
 
@@ -55,45 +53,39 @@ export default function MealForm({ meal }: Props) {
     name: "ingredients",
   });
 
+  const { nutrients, isReady } = useCalculateNutrients(ingredients ?? [], allIngredients ?? [], servings ?? 1);
 
-const { nutrients, isReady } = useCalculateNutrients(
-  ingredients ?? [], 
-  allIngredients ?? [], 
-  servings ?? 1, 
-);
-
-useEffect(() => {
-  if (isReady) { 
-    setValue("nutrients", nutrients);
-  }
-}, [nutrients, isReady, setValue]);
+  useEffect(() => {
+    if (isReady) {
+      setValue("nutrients", nutrients);
+    }
+  }, [nutrients, isReady, setValue]);
 
   const handleImageUpload = async (file: File) => {
     try {
       const storageId = await uploadImage(file);
       setValue("pictureStorageId", storageId);
     } catch (err) {
-      alert("Chyba při nahrávání obrázku")
+      alert("Chyba při nahrávání obrázku");
       console.error("CHYBA PŘI NAHRÁVÁNÍ OBRÁZKU:", err);
     }
   };
-  
-const cleanedData = (data: MealFormData) => ({
-  name: data.name,
-  types: data.types,
-  servings: data.servings,
-  pictureStorageId: data.pictureStorageId,
-  preparation: data.preparation,
-  ingredients: data.ingredients.map(ing => ({
-    ...ing,
-    altUnitIndex: ing.altUnitIndex !== undefined ? Number(ing.altUnitIndex) : undefined
-  })),
-  nutrients: data.nutrients
-});
+
+  const cleanedData = (data: MealFormData) => ({
+    name: data.name,
+    types: data.types,
+    servings: data.servings,
+    pictureStorageId: data.pictureStorageId,
+    preparation: data.preparation,
+    ingredients: data.ingredients.map((ing) => ({
+      ...ing,
+      altUnitIndex: ing.altUnitIndex !== undefined ? Number(ing.altUnitIndex) : undefined,
+    })),
+    nutrients: data.nutrients,
+  });
 
   const onSubmit = async (data: MealFormData) => {
-
-const finalData = cleanedData(data)  
+    const finalData = cleanedData(data);
 
     try {
       if (isEditing && meal) {
@@ -122,12 +114,8 @@ const finalData = cleanedData(data)
           remove={removeIngredient}
         />
         <PreparationSection />
-       
-        <NutrientsSection 
-  nutrients={nutrients} 
- 
-  isReady={isReady}
-/>
+
+        <NutrientsSection nutrients={nutrients} isReady={isReady} />
         <FormActionsSection isSubmitting={isSubmitting} isEditing={isEditing} />
       </form>
     </FormProvider>

@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from 'react';
+import { useCallback } from "react";
 
 export interface Nutrients {
   kcal: number;
@@ -10,16 +10,16 @@ export interface Nutrients {
 }
 
 const ZERO_NUTRIENTS: Nutrients = {
-  kcal: 0, fat: 0, carbohydrates: 0, protein: 0, sugar: 0, fiber: 0
+  kcal: 0,
+  fat: 0,
+  carbohydrates: 0,
+  protein: 0,
+  sugar: 0,
+  fiber: 0,
 };
 
-export const useCalculateNutrients = (
-  ingredients: any[],
-  allIngredients: any[],
-  servings: number,
- 
-) => {
-  const nutrients = useMemo(() => {
+export const useCalculateNutrients = (ingredients: any[], allIngredients: any[], servings: number) => {
+  const nutrients = (() => {
     if (!allIngredients?.length || !ingredients?.length) {
       return ZERO_NUTRIENTS;
     }
@@ -54,10 +54,9 @@ export const useCalculateNutrients = (
           fiber: totalNutrients.fiber / servings,
         }
       : ZERO_NUTRIENTS;
-  }, [ingredients, allIngredients, servings]); 
+  })();
 
   const isReady = Boolean(allIngredients?.length);
 
   return { nutrients, isReady };
 };
-
